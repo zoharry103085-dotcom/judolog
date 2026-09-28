@@ -460,6 +460,7 @@ button{font-size:14px}
 </style>
 </head>
 <body>
+<p id="jlLive" class="jl-sr" aria-live="polite"></p>
 <article class="phone login" id="login" aria-labelledby="loginTitle">
 <div class="status"><span>9:41</span><span>● ● ▰</span></div>
 <div class="screen">
@@ -542,11 +543,12 @@ button{font-size:14px}
 
 <div class="welcome-copy">
 <small id="homeWeek">이번 주 수련 기록 없음</small>
-<h2 id="homeGreeting">환서님,<br>첫 수련을 기록해보세요.</h2>
+<h2 id="homeGreeting">오늘도 수고했어요.<br>첫 수련을 기록해보세요.</h2>
 <p>오늘 받은 피드백, 잊기 전에 남겨두세요.</p>
 </div>
 </section>
 <p class="storage-warning" id="storageWarning" role="alert" hidden><b>이 브라우저에서는 기록이 저장되지 않아요.</b> 창을 닫으면 작성한 기록이 사라집니다. 브라우저 설정에서 사이트 데이터(쿠키)를 허용한 뒤 다시 열어주세요.</p>
+<div class="login-nudge" id="loginNudge" role="region" aria-labelledby="loginNudgeTitle" hidden><b id="loginNudgeTitle">수련 기록이 5개 모였어요</b><p>로그인하면 휴대폰을 바꿔도 기록을 이어서 볼 수 있어요.</p><div class="login-nudge-actions"><button type="button" id="loginNudgeGo">로그인하기</button><button type="button" id="loginNudgeClose">괜찮아요</button></div></div>
 <button class="draft-banner" id="draftBanner" type="button" hidden><b>작성 중인 기록이 있어요</b><span id="draftBannerText"></span><em>이어서 쓰기</em></button>
 <button class="home-record" data-go="record">오늘의 수련 기록</button>
 <div class="section-title">
@@ -567,7 +569,6 @@ button{font-size:14px}
 <small>이번 주 합계</small>
 </div>
 </div>
-<button class="data-reset" id="resetAllData" type="button">모든 수련 데이터 초기화</button>
 </div>
 <nav class="nav bottom-nav" aria-label="주요 화면 이동">
 <button type="button" data-go="home"><span>수련</span></button>
@@ -630,7 +631,7 @@ button{font-size:14px}
 <h2 class="record-step-title">오늘의 수련 확인</h2>
 <p class="record-step-desc">저장하기 전에 기록 내용을 확인하세요.</p>
 <div class="review-list">
-<div class="review-item review-date"><small id="recordDayLabel">수련 날짜</small><div class="date-choices" role="group" aria-labelledby="recordDayLabel"><button type="button" data-day="0">오늘</button><button type="button" data-day="1">어제</button><label class="date-pick"><span>다른 날짜</span><input type="date" id="recordDay" aria-label="다른 날짜 직접 선택"></label></div></div>
+<div class="review-item review-date"><small id="recordDayLabel">수련 날짜</small><div class="date-choices" role="group" aria-labelledby="recordDayLabel"><button type="button" data-day="0">오늘</button><button type="button" data-day="1">어제</button><button type="button" class="date-pick" id="recordDayBtn" aria-haspopup="dialog" aria-pressed="false"><span id="recordDayBtnText">다른 날짜</span></button><input type="date" id="recordDay" hidden tabindex="-1" aria-hidden="true"></div></div>
 <div class="review-item"><small>연습 기술</small><div id="reviewTechs"></div></div>
 <div class="review-item"><small>집중 기술</small><div id="reviewFocus"></div></div>
 <div class="review-item"><small id="reviewFeedbackLabel">코치 피드백</small><div id="reviewFeedback"></div></div><div id="reviewExtras"></div>
@@ -670,7 +671,12 @@ button{font-size:14px}
 </h2>
 <div class="eng" id="detailEng">
 </div>
+<p class="detail-summary" id="detailSummary"></p>
 <div class="detail-tech-list" id="detailTechList" aria-label="저장된 기술 목록"></div>
+<section class="tech-timeline" aria-labelledby="timelineTitle">
+<h3 id="timelineTitle">피드백 기록</h3>
+<div id="techTimeline"></div>
+</section>
 <div class="stats">
 <div class="stat">
 <small>연습한 기록</small>
@@ -689,10 +695,6 @@ button{font-size:14px}
 </div>
 </div>
 <p class="stat-help">연습한 기록은 이 기술을 고른 기록 수예요. 기록 단계는 1~3회 시작, 4~9회 누적 중, 10회 이상 꾸준함입니다.</p>
-<section class="tech-timeline" aria-labelledby="timelineTitle">
-<h3 id="timelineTitle">피드백 기록</h3>
-<div id="techTimeline"></div>
-</section>
 <section class="steps">
 <h3>나의 핵심 체크포인트</h3>
 <div class="step">
@@ -714,6 +716,7 @@ button{font-size:14px}
 <div class="screen">
 <header class="history-head"><button type="button" data-go="home" aria-label="홈으로 돌아가기">‹</button><div><small>TRAINING ARCHIVE</small><b>전체 수련 기록</b></div></header><div class="history-filter" id="historyFilter" role="group" aria-label="기술로 걸러 보기"></div>
 <div class="history-list" id="historyList"></div>
+<button class="data-reset" id="resetAllData" type="button">모든 수련 데이터 초기화</button>
 </div>
 </article>
 <aside class="side">
@@ -742,7 +745,7 @@ button{font-size:14px}
 </details>
 </aside>
 </main>
-<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v54 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
+<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v60 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
 <div class="mobiletip">상단 탭을 눌러 화면을 바꿔보세요.</div>
 </div>
 <div class="judo-cursor" id="judoCursor" aria-hidden="true">柔</div>
@@ -753,8 +756,8 @@ var JL_STORAGE_OK=true;
 var JL_STORE=(function(){try{var s=window.localStorage;s.setItem('__jl_test','1');s.removeItem('__jl_test');return s}catch(e){JL_STORAGE_OK=false;var m={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}}})();
 </script>
 <script>
-const copy={onboard:['무슨 앱인지<br>첫 화면에서 말하기', '도장 사진 위에 이 앱이 하는 일을 한 문장으로 적고, 시작 버튼 하나만 두었습니다.', ['문제 · 분위기만 있고 무엇을 하는 앱인지 모호했음', '의도 · "코치 피드백을 기술별로 모아두는 노트"라고 직접 설명', '결과 · 로그인 전에는 입문 → 로그인 → 수련 순서로 시작']],home:['오늘 정리할 것과<br>이어 쓸 것을 먼저', '오늘의 수련 기록 버튼을 가장 위에 두고, 쓰다가 멈춘 기록이 있으면 그 위에 이어 쓰기 카드를 띄웁니다.', ['문제 · 쓰다가 나가면 작성 내용이 사라졌음', '의도 · 입력할 때마다 이 기기에 임시 저장', '결과 · 홈에서 한 번 눌러 이어 쓰기']],record:['운동이 끝난 뒤<br>기술별로 정리하기', '최근 기술이나 검색으로 오늘 연습한 기술을 고르고, 기술마다 받은 코치 피드백을 따로 남깁니다.', ['문제 · 여러 기술에 피드백을 받아도 입력칸이 하나뿐이었음', '의도 · 집중 기술은 펼치고, 나머지 기술은 필요할 때 추가', '결과 · 어제 한 수련도 날짜를 골라 나중에 정리']],detail:['대회 전에<br>기술 하나만 다시 보기', '기술을 고르면 그 기술에 받은 피드백과 목표가 날짜순으로 모두 나옵니다.', ['문제 · 지난 피드백을 보려면 전체 기록을 스크롤해야 했음', '의도 · 다시 꺼내 보는 기준은 날짜가 아니라 기술 (가설)', '결과 · 기술 선택 한 번으로 피드백 흐름 전체 확인']]};
-copy.login=['시작할 때 로그인,<br>건너뛰기도 가능', '로그인하지 않았다면 입문 다음에 로그인 화면을 보여주고, "나중에"를 누르면 바로 수련 화면으로 들어갑니다.', ['문제 · 로그인 없이 쓰면 기기를 바꿀 때 기록을 이어갈 수 없음', '의도 · 입문 다음에 로그인을 권하되 강제하지 않음', '결과 · 한 번 로그인하면 다음부터 수련 화면으로 바로']];
+const copy={onboard:['무슨 앱인지<br>첫 화면에서 말하기', '도장 사진 위에 이 앱이 하는 일을 한 문장으로 적고, 시작 버튼 하나만 두었습니다.', ['문제 · 분위기만 있고 무엇을 하는 앱인지 모호했음', '의도 · "코치 피드백을 기술별로 모아두는 노트"라고 직접 설명', '결과 · 처음 한 번만 입문 → 로그인, 그다음부터는 수련 화면으로 바로']],home:['오늘 정리할 것과<br>이어 쓸 것을 먼저', '오늘의 수련 기록 버튼을 가장 위에 두고, 쓰다가 멈춘 기록이 있으면 그 위에 이어 쓰기 카드를 띄웁니다.', ['문제 · 쓰다가 나가면 작성 내용이 사라졌음', '의도 · 입력할 때마다 이 기기에 임시 저장', '결과 · 홈에서 한 번 눌러 이어 쓰기']],record:['운동이 끝난 뒤<br>기술별로 정리하기', '최근 기술이나 검색으로 오늘 연습한 기술을 고르고, 기술마다 받은 코치 피드백을 따로 남깁니다.', ['문제 · 여러 기술에 피드백을 받아도 입력칸이 하나뿐이었음', '의도 · 집중 기술은 펼치고, 나머지 기술은 필요할 때 추가', '결과 · 어제 한 수련도 날짜를 골라 나중에 정리']],detail:['대회 전에<br>기술 하나만 다시 보기', '기술을 고르면 그 기술에 받은 피드백과 목표가 날짜순으로 모두 나옵니다.', ['문제 · 지난 피드백을 보려면 전체 기록을 스크롤해야 했음', '의도 · 다시 꺼내 보는 기준은 날짜가 아니라 기술 (가설)', '결과 · 기술을 고르면 가장 최근 코치 피드백이 첫 화면에']]};
+copy.login=['시작할 때 로그인,<br>건너뛰기도 가능', '처음 들어오면 입문 다음에 로그인 화면을 보여주고, "나중에"를 누르면 수련 화면으로 들어가 다음부터는 묻지 않습니다.', ['문제 · 로그인 없이 쓰면 기기를 바꿀 때 기록을 이어갈 수 없음', '의도 · 입문 다음에 로그인을 권하되 강제하지 않음', '결과 · "나중에" 한 번이면 다음부터 수련으로 바로, 기록 5개째에 한 번만 다시 권함']];
 copy.history=['날짜별로 보고<br>기술로 걸러 보기', '최신순 기록 카드 위에 기술 칩을 두어, 원하는 기술이 들어간 기록만 남겨 볼 수 있게 했습니다.', ['문제 · 기록이 쌓일수록 원하는 기록을 찾기 어려움', '의도 · 날짜순은 유지하고 기술로만 걸러 보기', '결과 · 삭제해도 6초 안에 되돌리기 가능']];
 const techData={};
 const techniqueCatalog={
@@ -813,7 +816,7 @@ function readDraft(){try{const d=JSON.parse(JL_STORE.getItem(DRAFT_KEY)||'null')
 function draftMeaningful(){return !editingRecordId&&!$('#saved').classList.contains('show')&&(selectedTechs.size>0||!!$('#feedback').value.trim()||!!$('#goal').value.trim()||Object.values(extraFeedback).some(v=>String(v).trim()))}
 function saveDraft(){if(draftMute||!draftMeaningful())return;try{JL_STORE.setItem(DRAFT_KEY,JSON.stringify({selected:[...selectedTechs],current:currentTech,step:recordStep,feedback:$('#feedback').value,goal:$('#goal').value,extra:extraFeedback,open:[...extraOpen],randoriDone:$('#randoriDone').checked,randoriCount:$('#randoriCount').value,day:recordDay,savedAt:Date.now()}))}catch(e){}}
 function clearDraft(){try{JL_STORE.removeItem(DRAFT_KEY)}catch(e){}renderDraftBanner()}
-function describeDraft(d){const names=d.selected.map(techName);const when=new Intl.DateTimeFormat('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(d.savedAt||Date.now()));return (names.length?names[0]+(names.length>1?` 외 ${names.length-1}개`:''):'기술 선택 전')+(d.feedback||d.goal||Object.values(d.extra||{}).some(v=>String(v).trim())?' · 피드백 작성 중':'')+` · ${when} 저장`}
+function describeDraft(d){const names=d.selected.map(techName);const when=new Intl.DateTimeFormat('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(d.savedAt||Date.now()));return (names.length?names[0]+(names.length>1?` 외 ${names.length-1}개`:''):'기술 선택 전')+' · '+(['기술 고르는 중','집중 기술 고르는 중','피드백 작성 중','저장 직전'][Math.min(4,Math.max(1,Number(d.step)||1))-1])+` · ${when} 저장`}
 function renderDraftBanner(){const b=$('#draftBanner');if(!b)return;const d=readDraft();b.hidden=!d;if(d){const t=describeDraft(d),i=t.lastIndexOf(' · ');$('#draftBannerText').innerHTML=escapeHtml(t.slice(0,i))+'<br>'+escapeHtml(t.slice(i+3).replace(/ 저장$/,' 임시 저장'))}}
 function restoreDraft(d){if(!d)return;draftMute++;navSuppress++;try{resetRecordDraft();
   d.selected.forEach(id=>{const m=findTechMeta(id);if(m){ensureTech(id,m.name,m.typeName,m.groupName);selectedTechs.add(id)}});
@@ -825,12 +828,20 @@ function restoreDraft(d){if(!d)return;draftMute++;navSuppress++;try{resetRecordD
   setRecordStep(step)}finally{navSuppress--;draftMute--}
   resetScroll('record');focusHeading('record');pushNav();updateCounters&&updateCounters()}
 async function maybeResume(){const d=readDraft();if(!d)return;const ok=await askConfirm(describeDraft(d)+'\n새로 쓰기를 고르고 입력을 시작하면 임시 저장된 내용은 새 기록으로 바뀝니다.',{title:'작성 중인 기록이 있어요',okText:'이어서 쓰기',cancelText:'새로 쓰기'});if(ok)restoreDraft(readDraft())}
-let toastTimer=null;
+/* v56-claude: 창이 떠 있는 동안 그 뒤의 요소는 키보드·화면 읽기에서 제외 */
+const jlIsoMap=new Map();
+function jlIsolate(el,on,stopAt){if(!el)return;const prev=jlIsoMap.get(el);if(prev){prev.forEach(x=>x.inert=false);jlIsoMap.delete(el)}if(!on)return;const list=[];let node=el;while(node&&node!==stopAt&&node.parentElement){[...node.parentElement.children].forEach(sib=>{if(sib!==node&&!sib.inert&&!sib.matches('.jl-toast,.jl-dialog,.status')){sib.inert=true;list.push(sib)}});node=node.parentElement;if(node===stopAt)break}jlIsoMap.set(el,list)}
+let toastTimer=null;let editOriginTech=null;
 function showToast(message,{actionText='',onAction=null,duration=4000}={}){document.querySelectorAll('.jl-toast').forEach(t=>t.remove());clearTimeout(toastTimer);
   const host=$('.phone.active')||document.body,el=document.createElement('div');el.className='jl-toast';el.setAttribute('role','status');
   const p=document.createElement('p');p.textContent=message;el.appendChild(p);
   if(actionText){const b=document.createElement('button');b.type='button';b.textContent=actionText;b.onclick=()=>{el.remove();clearTimeout(toastTimer);onAction&&onAction()};el.appendChild(b)}
-  host.appendChild(el);toastTimer=setTimeout(()=>jlOut(el),duration);return el}
+  host.appendChild(el);
+  /* v56-claude: 마우스가 올라가 있거나 키보드 초점이 있는 동안은 사라지지 않음 (터치로 자동 초점이 간 경우는 그대로 10초) */
+  let left=duration,started=Date.now(),over=false;const pause=()=>{if(!toastTimer)return;clearTimeout(toastTimer);toastTimer=null;left-=Date.now()-started},resume=()=>{if(toastTimer||over||!el.isConnected||el.querySelector(':focus-visible'))return;started=Date.now();toastTimer=setTimeout(()=>jlOut(el),Math.max(left,2000))};
+  el.addEventListener('pointerenter',()=>{over=true;pause()});el.addEventListener('pointerdown',()=>{over=true;pause()});el.addEventListener('focusin',e=>{if(e.target.matches(':focus-visible'))pause()});
+  el.addEventListener('pointerleave',()=>{over=false;resume()});el.addEventListener('pointercancel',()=>{over=false;resume()});el.addEventListener('focusout',()=>setTimeout(resume,0));
+  toastTimer=setTimeout(()=>jlOut(el),duration);return el}
 function jlOut(el){if(!el||!el.isConnected)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.remove();return}el.classList.add('is-out');setTimeout(()=>el.remove(),160)}
 function allTechList(){const out=[];Object.entries(techniqueCatalog).forEach(([tid,type])=>Object.entries(type.groups).forEach(([gid,g])=>g.items.forEach(([id,name])=>out.push({id,name,typeName:type.name,groupName:g.name}))));Object.values(customCategories).forEach(g=>g.items.forEach(([id,name])=>out.push({id,name,typeName:'메치기',groupName:g.name})));return out}
 function recentTechs(){const seen=[];[...recordHistory].sort((a,b)=>new Date(b.date)-new Date(a.date)).forEach(r=>[r.focusTech,...r.skills].forEach(id=>{if(!seen.includes(id)&&findTechMeta(id))seen.push(id)}));return seen.slice(0,6)}
@@ -849,10 +860,12 @@ function renderExtraFeedback(){const box=$('#extraFeedbackBox');if(!box)return;c
   box.querySelectorAll('[data-extra-feedback]').forEach(t=>t.addEventListener('input',()=>{extraFeedback[t.dataset.extraFeedback]=t.value;saveDraft();updateCounters&&updateCounters()}));
   if(typeof updateCounters==='function')updateCounters()}
 function renderDayChoices(){const t=todayStr(),y=todayStr(1);if(!recordDay)recordDay=t;document.querySelectorAll('[data-day]').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.day==='0'&&recordDay===t)||(b.dataset.day==='1'&&recordDay===y))));
-  const inp=$('#recordDay');inp.max=t;inp.value=recordDay;inp.closest('.date-pick').classList.toggle('is-on',recordDay!==t&&recordDay!==y);
+  const inp=$('#recordDay');inp.max=t;inp.value=recordDay;const other=recordDay!==t&&recordDay!==y,db=$('#recordDayBtn');if(db){db.classList.toggle('is-on',other);db.setAttribute('aria-pressed',String(other));$('#recordDayBtnText').textContent=other?'다른 날짜 · '+fmtDay(recordDay+'T12:00:00'):'다른 날짜';db.setAttribute('aria-label',other?'다른 날짜, '+fmtDay(recordDay+'T12:00:00')+' 선택됨, 달력 열기':'다른 날짜, 달력 열기')}
   const [,mm,dd]=recordDay.split('-');$('#recordDate').textContent=(editingRecordId?'기존 수련 기록 · ':(recordDay===t?'오늘의 수련 · ':'지난 수련 · '))+mm+'. '+dd+'.'}
 function recordDateIso(existing,now){if(existing&&dayOf(existing.date)===recordDay)return existing.date;if(!existing&&recordDay===todayStr())return now.toISOString();const [y,m,d]=recordDay.split('-').map(Number);return new Date(y,m-1,d,now.getHours(),now.getMinutes()).toISOString()}
-updateCounters=function(){const set=(el,ta)=>{if(!el||!ta)return;const n=ta.value.length,max=ta.maxLength;el.textContent=n+' / '+max;el.classList.toggle('is-full',n>=max)};set($('#feedbackCount'),$('#feedback'));set($('#goalCount'),$('#goal'));document.querySelectorAll('[data-count-for]').forEach(el=>set(el,document.querySelector(`[data-extra-feedback="${el.dataset.countFor}"]`)))};
+updateCounters=function(){const set=(el,ta)=>{if(!el||!ta)return;const n=ta.value.length,max=ta.maxLength,full=n>=max;el.textContent=full?`${n} / ${max} · 최대 ${max}자까지 쓸 수 있어요`:n+' / '+max;el.classList.toggle('is-full',full);
+    /* v56-claude: 가득 찬 순간 한 번만 화면 읽기에 알림 */
+    if(full&&el.dataset.full!=='1'){const live=document.getElementById('jlLive');if(live){live.textContent='';setTimeout(()=>{live.textContent=`최대 ${max}자까지 쓸 수 있어요. 더 입력한 글자는 들어가지 않습니다.`},50)}}el.dataset.full=full?'1':''};set($('#feedbackCount'),$('#feedback'));set($('#goalCount'),$('#goal'));document.querySelectorAll('[data-count-for]').forEach(el=>set(el,document.querySelector(`[data-extra-feedback="${el.dataset.countFor}"]`)))};
 /* v45-claude: 기술별 피드백 (집중 기술은 feedback, 나머지 연습 기술은 extraFeedback) */
 function techFeedback(record,id){return id===record.focusTech?(record.feedback||''):String(record.extraFeedback?.[id]||'')}
 function fmtShort(d){return new Intl.DateTimeFormat('ko-KR',{month:'2-digit',day:'2-digit'}).format(new Date(d))}
@@ -1008,9 +1021,9 @@ function openTechVideo(id){
   const video=techniqueVideos.find(item=>item.id===id);if(!video)return;
   $('#techVideoModalTitle').textContent=video.title;$('#techVideoYoutube').href=video.url;
   $('#techVideoPlayer').src=`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0`;
-  $('#techVideoModal').hidden=false;$('#techVideoClose').focus();
+  $('#techVideoModal').hidden=false;jlIsolate($('#techVideoModal'),true,$('#techVideoModal').closest('.phone'));$('#techVideoClose').focus();
 }
-function closeTechVideo(){const modal=$('#techVideoModal');if(!modal)return;const wasOpen=!modal.hidden;modal.hidden=true;$('#techVideoPlayer').src='';if(wasOpen&&window.__videoOpener&&document.contains(window.__videoOpener))window.__videoOpener.focus()}
+function closeTechVideo(){const modal=$('#techVideoModal');if(!modal)return;const wasOpen=!modal.hidden;modal.hidden=true;jlIsolate(modal,false);$('#techVideoPlayer').src='';if(wasOpen&&window.__videoOpener&&document.contains(window.__videoOpener))window.__videoOpener.focus()}
 /* v37-claude: 영상 창이 열려 있을 때 ESC로 닫고, 초점을 원래 누른 영상 카드로 되돌림 */
 document.addEventListener('focusin',e=>{if(e.target.closest&&e.target.closest('[data-video-open]'))window.__videoOpener=e.target.closest('[data-video-open]')});
 document.addEventListener('click',e=>{const o=e.target.closest&&e.target.closest('[data-video-open]');if(o)window.__videoOpener=o},true);
@@ -1063,18 +1076,29 @@ async function deleteCustomCategory(id){const group=customCategories[id];if(!gro
 function renderTechPicker(){
   const picker=$('#techPicker');
   if(!picker)return;
+  /* v58-claude: 화면(분류)이 바뀌면 지난 오류 문구는 지움 */
+  if(renderTechPicker.lastPath!==pickerPath.join('>')){$('#step1Error').textContent='';renderTechPicker.lastPath=pickerPath.join('>')}
   const last=pickerPath.at(-1);
   if(last==='add-category'){
     $('#techBreadcrumb').textContent='메치기 › 기타 › 큰 카테고리 추가';
     picker.innerHTML=`<button class="tech-picker-back" type="button" data-picker-back>${JL_I.back}이전</button><div class="custom-tech-form"><input id="customCategoryName" maxlength="20" placeholder="예: 연결기술, 변형기술"><button type="button" id="addCustomCategory">카테고리 추가</button></div>${selectedSummary()}`;
-    $('#addCustomCategory').onclick=()=>{const name=$('#customCategoryName').value.trim();if(!name){$('#step1Error').textContent='추가할 카테고리명을 입력해주세요.';return}const id='category_'+Date.now();customCategories[id]={name,items:[]};saveCustomCategories();pickerPath=['nage','other'];renderTechPicker()};
+    $('#customCategoryName').onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();$('#addCustomCategory').click()}};
+    $('#addCustomCategory').onclick=()=>{const name=$('#customCategoryName').value.trim();if(!name){$('#step1Error').textContent='추가할 카테고리명을 입력해주세요.';return}
+      const nm=v=>v.replace(/\s+/g,'').toLowerCase(),exists=[...Object.values(techniqueCatalog.nage.groups).map(g=>g.name),...Object.values(customCategories).map(g=>g.name)].some(n=>nm(n)===nm(name));
+      if(exists){$('#step1Error').textContent=`'${name}' 카테고리는 이미 있어요. 다른 이름을 입력해주세요.`;return}
+      $('#step1Error').textContent='';const id='category_'+Date.now();customCategories[id]={name,items:[]};saveCustomCategories();pickerPath=['nage','other'];renderTechPicker()};
   }else if(last==='add-tech'){
     const isCustomGroup=pickerPath[1]==='other';
     const type=techniqueCatalog[pickerPath[0]];
     const group=isCustomGroup?customCategories[pickerPath[2]]:type.groups[pickerPath[1]];
     $('#techBreadcrumb').textContent=`${type.name} › ${group.name} › 세부 기술 추가`;
     picker.innerHTML=`<button class="tech-picker-back" type="button" data-picker-back>${JL_I.back}이전</button><div class="custom-tech-form"><input id="customTechName" maxlength="30" placeholder="세부 기술명을 입력하세요"><button type="button" id="addCustomTech">기술 추가</button></div>${selectedSummary()}`;
-    $('#addCustomTech').onclick=()=>{const name=$('#customTechName').value.trim();if(!name){$('#step1Error').textContent='추가할 기술명을 입력해주세요.';return}const id='custom_'+Date.now();if(isCustomGroup){group.items.push([id,name]);saveCustomCategories()}else{group.items.push([id,name]);customTechniques.push({id,name,typeId:pickerPath[0],groupId:pickerPath[1]});saveCustomTechniques()}ensureTech(id,name,type.name,group.name);selectedTechs.add(id);currentTech=currentTech||id;pickerPath.pop();renderTechPicker()};
+    $('#customTechName').onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();$('#addCustomTech').click()}};
+    $('#addCustomTech').onclick=()=>{const name=$('#customTechName').value.trim();if(!name){$('#step1Error').textContent='추가할 기술명을 입력해주세요.';return}
+      /* v58-claude: 이미 있는 기술 이름이면 새로 만들지 않고 그 기술을 선택 */
+      const nm=v=>v.replace(/\s+/g,'').toLowerCase(),dup=allTechList().find(t=>nm(t.name)===nm(name));
+      if(dup){ensureTech(dup.id,dup.name,dup.typeName,dup.groupName);selectedTechs.add(dup.id);currentTech=currentTech||dup.id;$('#step1Error').textContent='';pickerPath.pop();renderTechPicker();saveDraft();showToast(`'${dup.name}' 기술이 이미 있어서 그 기술을 선택했어요.`);return}
+      $('#step1Error').textContent='';const id='custom_'+Date.now();if(isCustomGroup){group.items.push([id,name]);saveCustomCategories()}else{group.items.push([id,name]);customTechniques.push({id,name,typeId:pickerPath[0],groupId:pickerPath[1]});saveCustomTechniques()}ensureTech(id,name,type.name,group.name);selectedTechs.add(id);currentTech=currentTech||id;pickerPath.pop();renderTechPicker()};
   }else if(pickerPath.length===0){
     $('#techBreadcrumb').textContent='';
     const recent=recentTechs();
@@ -1094,17 +1118,17 @@ function renderTechPicker(){
     picker.innerHTML=`<button class="tech-picker-back" type="button" data-picker-back>${JL_I.back}이전</button>${empty}<div class="picker-grid">${group.items.map(([id,name])=>customPickerCard(name,'pick-custom:'+id,id,selectedTechs.has(id))).join('')}</div><button class="custom-tech-button" type="button" data-add-tech>${JL_I.plus}세부 기술명 추가</button>${selectedSummary()}`;
   }else{
     const type=techniqueCatalog[pickerPath[0]],group=type.groups[pickerPath[1]];$('#techBreadcrumb').textContent=`기술 선택 › ${type.name} › ${group.name}`;
-    const empty=group.items.length===0?'<div class="selected-tech-summary"><b>아직 등록된 기술이 없습니다.</b><br>환서님과 확정한 기술만 이곳에 추가합니다.</div>':'';
+    const empty=group.items.length===0?'<div class="selected-tech-summary"><b>아직 등록된 기술이 없습니다.</b><br>아래 버튼으로 직접 기술을 추가할 수 있어요.</div>':'';
     picker.innerHTML=`<button class="tech-picker-back" type="button" data-picker-back>${JL_I.back}이전</button>${empty}<div class="picker-grid">${group.items.map(([id,name])=>id.startsWith('custom_')?customPickerCard(name,'pick:'+id,id,selectedTechs.has(id)):pickerCard(name,'pick:'+id,'',selectedTechs.has(id))).join('')}</div><button class="custom-tech-button" type="button" data-add-tech>${JL_I.plus}세부 기술명 추가</button>${selectedSummary()}`;
   }
-  picker.querySelectorAll('[data-picker-action]').forEach(button=>button.onclick=()=>{const action=button.dataset.pickerAction;if(action.startsWith('pick-custom:')){const id=action.slice(12),type=techniqueCatalog.nage,group=customCategories[pickerPath[2]],name=group.items.find(item=>item[0]===id)[1];toggleTechnique(id,name,type.name,group.name)}else if(action.startsWith('pick-any:')){const id=action.slice(9),m=findTechMeta(id);if(m)toggleTechnique(id,m.name,m.typeName,m.groupName)}else if(action.startsWith('pick:')){const id=action.slice(5),type=techniqueCatalog[pickerPath[0]],group=type.groups[pickerPath[1]],name=group.items.find(item=>item[0]===id)[1];toggleTechnique(id,name,type.name,group.name)}else{pickerPath.push(action);renderTechPicker()}});
+  picker.querySelectorAll('[data-picker-action]').forEach(button=>button.onclick=()=>{const action=button.dataset.pickerAction;if(action.startsWith('pick-custom:')){const id=action.slice(12),type=techniqueCatalog.nage,group=customCategories[pickerPath[2]],name=group.items.find(item=>item[0]===id)[1];toggleTechnique(id,name,type.name,group.name)}else if(action.startsWith('pick-any:')){const id=action.slice(9),m=findTechMeta(id);if(m)toggleTechnique(id,m.name,m.typeName,m.groupName)}else if(action.startsWith('pick:')){const id=action.slice(5),type=techniqueCatalog[pickerPath[0]],group=type.groups[pickerPath[1]],name=group.items.find(item=>item[0]===id)[1];toggleTechnique(id,name,type.name,group.name)}else{pickerPath.push(action);renderTechPicker();pushNav()}});
   picker.querySelectorAll('[data-delete-tech]').forEach(button=>button.onclick=event=>{event.stopPropagation();deleteCustomTechnique(button.dataset.deleteTech)});
   picker.querySelectorAll('[data-edit-tech]').forEach(button=>button.onclick=event=>{event.stopPropagation();editCustomTechnique(button.dataset.editTech)});
   picker.querySelectorAll('[data-edit-category]').forEach(button=>button.onclick=event=>{event.stopPropagation();editCustomCategory(button.dataset.editCategory)});
   picker.querySelectorAll('[data-delete-category]').forEach(button=>button.onclick=event=>{event.stopPropagation();deleteCustomCategory(button.dataset.deleteCategory)});
   if(pickerPath.length===0)renderSearchResults();
-  const back=picker.querySelector('[data-picker-back]');if(back)back.onclick=()=>{pickerPath.pop();renderTechPicker()};
-  const addCategory=picker.querySelector('[data-add-category]');if(addCategory)addCategory.onclick=()=>{pickerPath.push('add-category');renderTechPicker()};
+  const back=picker.querySelector('[data-picker-back]');if(back)back.onclick=()=>{const up=pickerPath.slice(0,-1).join('>'),prev=navStack.at(-2);if(prev&&prev.screen==='record'&&prev.step===1&&(prev.pk||'')===up){history.back();return}pickerPath.pop();renderTechPicker();navStack[navStack.length-1]=navState();try{history.replaceState(navState(),'')}catch(e){}};
+  const addCategory=picker.querySelector('[data-add-category]');if(addCategory)addCategory.onclick=()=>{pickerPath.push('add-category');renderTechPicker();pushNav()};
   const addTech=picker.querySelector('[data-add-tech]');if(addTech)addTech.onclick=()=>{pickerPath.push('add-tech');renderTechPicker()};
   const browsingCategory=recordStep===1&&pickerPath.length<2&&selectedTechs.size===0;
   document.querySelector('.step-actions')?.classList.toggle('is-hidden',browsingCategory);
@@ -1179,8 +1203,10 @@ function saveRecord(){
   rebuildTechniqueStats();currentTech=record.focusTech;lastSavedTech=record.focusTech;JL_STORE.setItem('judolog-current-tech',currentTech);
   $('#savedTitle').innerHTML=escapeHtml(techName(currentTech))+(existing?' 기록을<br>수정했습니다.':' 중심 수련을<br>기록했습니다.');
   $('#savedText').textContent=record.goal?(record.feedback?'코치 피드백을 다음 수련 목표로 연결했습니다.':'다음 수련 목표를 남겼습니다.'):'오늘 연습한 기술을 기록했습니다.';
-  $('#savedSummary').innerHTML='<b>연습 기술</b> · '+record.skills.map(id=>escapeHtml(techName(id))).join(' · ')+'<br><b>다음 목표</b> · '+valueOrEmpty(record.goal)+'<br><b>자유대련</b> · '+(record.randoriCount?record.randoriCount+'판':'하지 않음');
-  $('#viewSkill').textContent=techName(currentTech)+' 성장 기록 보기';
+  $('#savedSummary').innerHTML='<b>연습 기술</b> · '+record.skills.slice(0,3).map(id=>escapeHtml(techName(id))).join(' · ')+(record.skills.length>3?` 외 ${record.skills.length-3}개`:'')+'<br><b>다음 목표</b> · '+valueOrEmpty(record.goal)+'<br><b>자유대련</b> · '+(record.randoriCount?record.randoriCount+'판':'하지 않음');
+  /* v56-claude: 수련일지에서 수정을 시작했다면 그 기술로 돌아가기 */
+  if(existing&&editOriginTech&&record.skills.includes(editOriginTech))lastSavedTech=editOriginTech;editOriginTech=null;
+  $('#viewSkill').textContent=techName(lastSavedTech)+' 성장 기록 보기';
   renderHome();renderDetail();
   editingRecordId=null;
   recordDraftNeedsReset=true;
@@ -1188,12 +1214,13 @@ function saveRecord(){
   const recordScreen=$('#record .screen');recordScreen.scrollTop=0;recordScreen.classList.add('is-saved');window.scrollTo({top:0});
   $('#recordNext').disabled=true;
   $('#saved').classList.add('show');
+  jlIsolate($('#saved'),true,$('#record .screen'));
   $('#viewSkill').focus({preventScroll:true});
 }
 function resetRecordDraft(){
   navSuppress++;try{
   draftMute++;selectedTechs.clear();currentTech=null;pickerPath=[];recordStep=1;recordDraftInitialized=false;editingRecordId=null;extraFeedback={};extraOpen=new Set();techQuery='';recordDay=todayStr();
-  $('#feedback').value='';$('#goal').value='';$('#randoriDone').checked=false;$('#randoriCount').value='';$('#randoriCountWrap').classList.remove('show');$('#saved').classList.remove('show');$('#record .screen').classList.remove('is-saved');$('#recordNext').disabled=false;
+  $('#feedback').value='';$('#goal').value='';$('#randoriDone').checked=false;$('#randoriCount').value='';$('#randoriCountWrap').classList.remove('show');$('#saved').classList.remove('show');jlIsolate($('#saved'),false);$('#record .screen').classList.remove('is-saved');$('#recordNext').disabled=false;
   $('#recordDate').textContent='오늘의 수련 · '+new Intl.DateTimeFormat('ko-KR',{month:'2-digit',day:'2-digit'}).format(new Date());
   $('#recordTitle').textContent='수련을 기록하세요';
   ['step1Error','step2Error','step3Error'].forEach(id=>{$('#'+id).textContent=''});
@@ -1215,14 +1242,20 @@ function deleteRecord(id){
   const index=recordHistory.findIndex(record=>record.id===id);if(index<0)return;const removed=recordHistory[index];
   recordHistory=recordHistory.filter(record=>record.id!==id);afterRecordsChanged();
   const label=fmtShort(removed.date)+' '+techName(removed.focusTech);
-  const toast=showToast(`${label} 기록을 삭제했어요.`,{actionText:'되돌리기',duration:6000,onAction:()=>{if(recordHistory.some(r=>r.id===removed.id))return;recordHistory.push(removed);recordHistory.sort((a,b)=>new Date(a.date)-new Date(b.date));afterRecordsChanged();showToast(`${label} 기록을 되살렸어요.`)}});
+  const toast=showToast(`${label} 기록을 삭제했어요.`,{actionText:'되돌리기',duration:10000,onAction:()=>{if(recordHistory.some(r=>r.id===removed.id))return;recordHistory.push(removed);recordHistory.sort((a,b)=>new Date(a.date)-new Date(b.date));afterRecordsChanged();showToast(`${label} 기록을 되살렸어요.`)}});
+  toast.querySelector('button')?.setAttribute('aria-label',`${label} 기록 되돌리기`);
   toast.querySelector('button')?.focus({preventScroll:true});
 }
+function jlResetVisibility(){const b=$('#resetAllData');if(!b)return;let any=recordHistory.length>0;try{any=any||Object.keys(customCategories).length>0||customTechniques.length>0||(typeof savedVideoIds!=='undefined'&&savedVideoIds.size>0)}catch(e){}b.hidden=!any}
 function afterRecordsChanged(){rebuildTechniqueStats();if(currentTech&&!techniqueStats[currentTech])currentTech=Object.keys(techniqueStats)[0]||null;currentTech?JL_STORE.setItem('judolog-current-tech',currentTech):JL_STORE.removeItem('judolog-current-tech');renderHome();renderHistory();renderDetail()}
+/* v55-claude: '이번 주' = 이번 주 월요일 0시부터 (최근 7일 아님) */
+function jlWeekStart(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d.getTime()}
+function renderLoginNudge(){const n=$('#loginNudge');if(!n)return;n.hidden=!!safeGet('judolog-login')||!!safeGet('judolog-login-nudge')||recordHistory.length<5}
 function renderHome(){
-  renderDraftBanner();$('#storageWarning').hidden=JL_STORAGE_OK;
-  const weekAgo=Date.now()-7*24*60*60*1000,weekRecords=recordHistory.filter(record=>new Date(record.date).getTime()>=weekAgo),weekly=weekRecords.length,weeklyRandori=weekRecords.reduce((sum,record)=>sum+(Number(record.randoriCount)||0),0),latest=recordHistory.at(-1);
-  $('#homeGreeting').innerHTML=weekly?`환서님,<br>이번 주 ${weekly}회 기록했어요.`:recordHistory.length?'환서님,<br>이번 주 첫 기록을 남겨보세요.':'환서님,<br>첫 수련을 기록해보세요.';
+  renderDraftBanner();renderLoginNudge();$('#storageWarning').hidden=JL_STORAGE_OK;
+  const weekAgo=jlWeekStart(),weekRecords=recordHistory.filter(record=>new Date(record.date).getTime()>=weekAgo),weekly=weekRecords.length,weeklyRandori=weekRecords.reduce((sum,record)=>sum+(Number(record.randoriCount)||0),0),latest=recordHistory.at(-1);
+  const nm=jlUserName(),hello=nm?escapeHtml(nm)+'님,':'오늘도 수고했어요.';
+  $('#homeGreeting').innerHTML=hello+'<br>'+(weekly?`이번 주 ${weekly}회 기록했어요.`:recordHistory.length?'이번 주 첫 기록을 남겨보세요.':'첫 수련을 기록해보세요.');
   $('#homeWeek').textContent=weekly?`이번 주 수련 기록 ${weekly}회`:'이번 주 수련 기록 없음';$('#homePractice').textContent=weekly+'회';$('#homeRounds').textContent=weeklyRandori+'판';
   $('#homeSkills').innerHTML=latest?`<button class="skill" type="button" data-home-tech="${latest.focusTech}"><div class="icon">누적 ${techniqueStats[latest.focusTech]?.count||1}회</div><b>${escapeHtml(techName(latest.focusTech))}</b><p>${new Intl.DateTimeFormat('ko-KR',{month:'2-digit',day:'2-digit'}).format(new Date(latest.date))} · ${valueOrEmpty(latest.goal,'다음 목표 작성 안 함')}</p></button>`:'<button class="new-record-empty" type="button" data-new-record aria-label="새 수련 기록 작성"><span class="icon">＋</span><b>등록된 기록 없음</b><p>눌러서 첫 수련 기록을 작성하세요</p></button>';
   document.querySelectorAll('[data-home-tech]').forEach(button=>button.onclick=()=>{pendingDetailTech=button.dataset.homeTech;show('detail')});
@@ -1240,7 +1273,7 @@ function renderHistory(){
 }
 /* v47-claude: 긴 글은 3줄까지만, '더보기'로 펼치기 */
 function applyClamp(root){root.querySelectorAll('.history-card p,.timeline-item p').forEach(p=>{if(p.dataset.clampDone)return;p.dataset.clampDone='1';p.classList.add('clamp');if(p.scrollHeight>p.clientHeight+2){const b=document.createElement('button');b.type='button';b.className='more-toggle';b.textContent='더보기';b.setAttribute('aria-expanded','false');b.onclick=()=>{const open=p.classList.toggle('is-open');b.textContent=open?'접기':'더보기';b.setAttribute('aria-expanded',String(open))};p.after(b)}else p.classList.remove('clamp')})}
-function historyCard(record){const date=fmtDay(record.date);const extras=record.skills.filter(id=>id!==record.focusTech&&techFeedback(record,id));return `<article class="history-card"><time>${date}</time><h3>${escapeHtml(techName(record.focusTech))} 중심 수련</h3><p><strong>연습 기술</strong> · ${record.skills.map(id=>escapeHtml(techName(id))).join(' · ')}</p><p><strong>코치 피드백</strong> · ${valueOrEmpty(record.feedback)}</p>${extras.map(id=>`<p><strong>${escapeHtml(techName(id))} 피드백</strong> · ${escapeHtml(techFeedback(record,id))}</p>`).join('')}<p><strong>다음 목표</strong> · ${valueOrEmpty(record.goal)}</p><p><strong>자유대련</strong> · ${record.randoriCount?record.randoriCount+'판':'하지 않음'}</p><div class="history-actions"><button type="button" data-edit-record="${record.id}">수정</button><button class="danger" type="button" data-delete-record="${record.id}">삭제</button></div></article>`}
+function historyCard(record){const date=fmtDay(record.date);const extras=record.skills.filter(id=>id!==record.focusTech&&techFeedback(record,id));return `<article class="history-card"><time>${date}</time><h3>${escapeHtml(techName(record.focusTech))} 중심 수련</h3><p><strong>연습 기술</strong> · ${record.skills.map(id=>escapeHtml(techName(id))).join(' · ')}</p><p><strong>코치 피드백</strong> · ${valueOrEmpty(record.feedback)}</p>${extras.map(id=>`<p><strong>${escapeHtml(techName(id))} 피드백</strong> · ${escapeHtml(techFeedback(record,id))}</p>`).join('')}<p><strong>다음 목표</strong> · ${valueOrEmpty(record.goal)}</p><p><strong>자유대련</strong> · ${record.randoriCount?record.randoriCount+'판':'하지 않음'}</p><div class="history-actions"><button type="button" data-edit-record="${record.id}" aria-label="${date} 기록 수정">수정</button><button class="danger" type="button" data-delete-record="${record.id}" aria-label="${date} 기록 삭제">삭제</button></div></article>`}
 function renderDetail(){
   if(pendingDetailTech){detailTech=pendingDetailTech;pendingDetailTech=null}
   const ids=Object.keys(techniqueStats),latestTech=recordHistory.at(-1)?.focusTech;
@@ -1253,9 +1286,12 @@ function renderDetail(){
   renderTimeline();
   if(!t){$('#detailClass').textContent='TECHNIQUE RECORD';$('#detailName').textContent='수련일지';$('#detailEng').textContent='기록한 기술이 여기에 모여요';$('#detailCount').textContent='—';$('#detailRate').textContent='—';$('#detailLevel').textContent='기록 전';$('#detailPoint1').innerHTML='첫 기술을 추가해보세요<small>아직 저장된 기록이 없습니다</small>';$('#detailPoint3').innerHTML='다음 수련 목표를 정하세요<small>피드백과 목표를 연결합니다</small>';return}
   $('#detailClass').textContent=t.className;$('#detailName').textContent=t.name;$('#detailEng').textContent=t.eng;$('#detailCount').innerHTML=t.count;$('#detailRate').innerHTML=t.rate;$('#detailLevel').textContent=t.level;$('#detailPoint1').innerHTML=t.points[0];$('#detailPoint3').innerHTML=t.points[2];
+  renderDetailSummary();
 }
+/* v56-claude: 통계 3개를 제목 아래 한 줄로 */
+function renderDetailSummary(){const el=$('#detailSummary');if(!el)return;const c=$('#detailCount').textContent.trim(),r=$('#detailRate').textContent.trim(),l=$('#detailLevel').textContent.trim();el.hidden=!detailTech;el.innerHTML=`<span>연습한 기록 <b>${escapeHtml(c)}</b></span><span>최근 수련 <b>${escapeHtml(r)}</b></span><span>기록 단계 <b>${escapeHtml(l)}</b></span>`}
 /* v48-claude: 기록이 없을 때 쌓이면 어떻게 보이는지 예시 */
-function exampleBlock(){return `<div class="example-block"><p class="example-label"><span>예시</span> 기록이 쌓이면 이렇게 기술별로 모여요</p><ol class="timeline-list is-example" aria-label="예시 기록"><li class="timeline-item"><div class="timeline-meta"><time>09. 20.</time><span>업어치기 · 집중 기술</span></div><p><strong>코치 피드백</strong> · 소매를 끝까지 당기고 상체를 세울 것</p><p><strong>다음 목표</strong> · 진입할 때 당기는 손을 끝까지 유지한다</p></li><li class="timeline-item"><div class="timeline-meta"><time>09. 13.</time><span>업어치기 · 집중 기술</span></div><p><strong>코치 피드백</strong> · 무릎을 더 낮게 넣을 것</p></li></ol></div>`}
+function exampleBlock(){return `<div class="example-block"><p class="example-label"><span>예시</span> 기록이 쌓이면 이렇게 기술별로 모여요</p><ol class="timeline-list is-example" aria-label="예시 기록"><li class="timeline-item"><div class="timeline-meta"><time>${fmtFull(new Date(Date.now()-8*864e5).toISOString())}</time><span>업어치기 · 집중 기술</span></div><p><strong>코치 피드백</strong> · 소매를 끝까지 당기고 상체를 세울 것</p><p><strong>다음 목표</strong> · 진입할 때 당기는 손을 끝까지 유지한다</p></li><li class="timeline-item"><div class="timeline-meta"><time>${fmtFull(new Date(Date.now()-15*864e5).toISOString())}</time><span>업어치기 · 집중 기술</span></div><p><strong>코치 피드백</strong> · 무릎을 더 낮게 넣을 것</p></li></ol></div>`}
 /* v45-claude: 선택한 기술의 피드백·목표를 날짜순(최신 먼저)으로 전부 */
 function renderTimeline(){
   const box=$('#techTimeline'),title=$('#timelineTitle');if(!box)return;
@@ -1274,27 +1310,31 @@ function safeSet(key,value){try{value===null?JL_STORE.removeItem(key):JL_STORE.s
 let loginReturnScreen='home';
 /* v44-claude: 화면 전환 시 스크롤 맨 위 + 제목으로 초점 이동 + 휴대폰/브라우저 뒤로가기를 앱 안에서 처리 */
 let navReady=false,navSuppress=0,navRestoring=false;const navStack=[];
-function navState(){const id=$('.phone.active')?.id||'home';return id==='record'?{screen:id,step:recordStep}:{screen:id}}
-function sameNav(a,b){return !!a&&!!b&&a.screen===b.screen&&(a.step||0)===(b.step||0)}
+function navState(){const id=$('.phone.active')?.id||'home';return id==='record'?{screen:id,step:recordStep,pk:recordStep===1?pickerPath.join('>'):''}:{screen:id}}
+function sameNav(a,b){return !!a&&!!b&&a.screen===b.screen&&(a.step||0)===(b.step||0)&&(a.pk||'')===(b.pk||'')}
 function pushNav(){if(!navReady||navSuppress||navRestoring)return;const st=navState();if(sameNav(st,navStack.at(-1)))return;navStack.push(st);try{history.pushState(st,'')}catch(e){}}
 function headingFor(id){if(id==='record')return $('.record-step.active .record-step-title');return {onboard:'#onboard h2',home:'#homeGreeting',detail:'#detailName',history:'#history .history-head b',login:'#loginTitle'}[id]&&$({onboard:'#onboard h2',home:'#homeGreeting',detail:'#detailName',history:'#history .history-head b',login:'#loginTitle'}[id])}
 function focusHeading(id){if(!navReady)return;const h=headingFor(id);if(!h)return;h.setAttribute('tabindex','-1');h.setAttribute('data-nav-heading','');try{h.focus({preventScroll:true})}catch(e){}}
 function resetScroll(id){const scr=document.querySelector('#'+id+' .screen');if(scr)scr.scrollTop=0}
-function renderAccountEntry(){const entry=document.getElementById('accountEntry');if(!entry)return;const loggedIn=!!safeGet('judolog-login');entry.textContent=loggedIn?'환서님':'로그인';entry.setAttribute('aria-label',loggedIn?'로그인됨, 로그아웃하기':'로그인');entry.classList.toggle('is-logged-in',loggedIn)}
+/* v56-claude: 이메일로 로그인하면 이메일 앞부분을 이름으로, 간편 로그인은 이름을 모르므로 부르지 않음 */
+function jlUserName(){if(!safeGet('judolog-login'))return '';return safeGet('judolog-login-name')||''}
+function renderAccountEntry(){const entry=document.getElementById('accountEntry');if(!entry)return;const loggedIn=!!safeGet('judolog-login'),nm=jlUserName();entry.textContent=loggedIn?(nm?nm+'님':'내 계정'):'로그인';entry.setAttribute('aria-label',loggedIn?'로그인됨, 로그아웃하기':'로그인');entry.classList.toggle('is-logged-in',loggedIn)}
 function show(id,options={}){
   let leftDraft=false,leftEdit=false;const prevScreen=$('.phone.active')?.id;
   navSuppress++;try{
-  cancelOpenDialog();
+  cancelOpenDialog();if(typeof jlCalClose==='function')jlCalClose(false);
   const previous=$('.phone.active')?.id;
   if(previous==='record'&&id!=='record'&&!options.preserveDraft){leftDraft=draftMeaningful();if(leftDraft)saveDraft();leftEdit=!!editingRecordId&&!$('#saved').classList.contains('show');resetRecordDraft()}
   if(id==='record'&&previous!=='record'&&!options.preserveDraft)resetRecordDraft();
+  /* v58-claude: 저장 완료 화면에서 "기술첩"을 다시 누르면 새 기록 1단계로 */
+  if(id==='record'&&previous==='record'&&$('#saved').classList.contains('show'))resetRecordDraft();
   document.querySelectorAll('.phone').forEach(x=>x.classList.toggle('active',x.id===id));
   const navigationId=id==='history'?'home':id;
   document.querySelectorAll('.tabs button').forEach(x=>{const active=x.dataset.screen===navigationId;x.classList.toggle('active',active);active?x.setAttribute('aria-current','page'):x.removeAttribute('aria-current')});
   document.querySelectorAll('.bottom-nav button').forEach(x=>{const active=x.dataset.go===navigationId;x.classList.toggle('active',active);active?x.setAttribute('aria-current','page'):x.removeAttribute('aria-current')});
   const c=copy[id];
   if(c){$('#sideTitle').innerHTML=c[0];$('#sideDesc').textContent=c[1];$('#uses').innerHTML=c[2].map((x,i)=>`<div><span>${i+1}</span><b>${x}</b></div>`).join('')}
-  if(id!=='record'){$('#saved').classList.remove('show');$('#record .screen').classList.remove('is-saved');$('#recordNext').disabled=false}
+  if(id!=='record'){$('#saved').classList.remove('show');jlIsolate($('#saved'),false);$('#record .screen').classList.remove('is-saved');$('#recordNext').disabled=false}
   if(id==='record')setRecordStep(recordStep||1);
   if(id==='home'){renderHome();renderAccountEntry();safeSet('judolog-visited','1')}
   if(id!=='login'&&id!=='history')loginReturnScreen=id;
@@ -1303,7 +1343,7 @@ function show(id,options={}){
   focusHeading(id);
   pushNav();
   if(id==='detail')renderDetail();
-  if(id==='history')renderHistory();
+  if(id==='history'){renderHistory();jlResetVisibility()}
   if(leftDraft)showToast('작성 중인 기록을 임시 저장했어요. 다시 기록을 열면 이어서 쓸 수 있어요.');
   else if(leftEdit)showToast('기록 수정을 취소했어요. 저장된 기록은 그대로입니다.');
   if(id==='record'&&prevScreen!=='record'&&!options.preserveDraft&&!navRestoring)setTimeout(maybeResume,0);
@@ -1319,7 +1359,7 @@ document.querySelectorAll('[data-go]').forEach(button=>button.onclick=()=>show(b
 document.addEventListener('click',event=>{
   const newRecord=event.target.closest('[data-new-record]');if(newRecord){event.preventDefault();resetRecordDraft();show('record',{preserveDraft:true});setTimeout(maybeResume,0);return}
   const draftBtn=event.target.closest('#draftBanner');if(draftBtn){event.preventDefault();const d=readDraft();show('record',{preserveDraft:true});restoreDraft(d);return}
-  const editRecord=event.target.closest('[data-edit-record]');if(editRecord){event.preventDefault();beginEditRecord(editRecord.dataset.editRecord);return}
+  const editRecord=event.target.closest('[data-edit-record]');if(editRecord){event.preventDefault();const originTech=editRecord.closest('#detail')?detailTech:null;beginEditRecord(editRecord.dataset.editRecord);editOriginTech=originTech;return}
   const deleteRecordButton=event.target.closest('[data-delete-record]');if(deleteRecordButton){event.preventDefault();deleteRecord(deleteRecordButton.dataset.deleteRecord);return}
   const resetButton=event.target.closest('#resetAllData');if(resetButton){event.preventDefault();resetAllData()}
 });
@@ -1348,7 +1388,8 @@ Object.keys(techniqueStats).forEach(id=>{const meta=findTechMeta(id);if(meta)ens
 initializeRandoriPicker();initializeTechVideos();setRecordStep(1);renderHome();renderDetail();
 /* v43-claude: 첫 방문은 입문, 다시 방문하면 홈으로 바로 (로그인은 필요할 때만) */
 /* v50-claude: 로그인 안 했으면 입문 → 로그인 → 수련, 로그인했으면 수련으로 바로 */
-show(safeGet('judolog-login')?'home':'onboard');
+/* v55-claude: 로그인했거나 "나중에"를 누른 적 있으면 수련으로 바로 */
+show(safeGet('judolog-login')||safeGet('judolog-skip-login')?'home':'onboard');
 function resetNavTo(){navStack.length=0;navStack.push(navState());try{history.replaceState(navState(),'')}catch(e){}}
 /* 시작 흐름(입문→로그인→수련)은 뒤로가기 기록을 쌓지 않음: 수련 화면에서 뒤로가기 = 앱 밖 */
 function quietShow(id,replace){if(!replace){show(id);return}navSuppress++;try{show(id)}finally{navSuppress--}resetNavTo()}
@@ -1356,6 +1397,7 @@ navReady=true;navStack.push(navState());try{history.replaceState(navState(),'')}
 window.addEventListener('popstate',event=>{
   const current=navStack.at(-1);
   /* 대화상자·영상 창이 열려 있으면 뒤로가기는 창만 닫음 */
+  if($('#jlCal')&&!$('#jlCal').hidden){jlCalClose(true);try{history.pushState(current,'')}catch(e){}return}
   const videoOpen=!$('#techVideoModal').hidden;
   if(activeDialog||videoOpen){if(activeDialog)cancelOpenDialog();if(videoOpen)closeTechVideo();try{history.pushState(current,'')}catch(e){}return}
   const target=event.state||navStack[0];
@@ -1372,6 +1414,7 @@ window.addEventListener('popstate',event=>{
       if(step>1&&selectedTechs.size===0)step=1;
       if(step===2&&selectedTechs.size===1)step=1;
       if(step>=3&&!currentTech)step=selectedTechs.size?2:1;
+      if(step===1)pickerPath=target.pk?String(target.pk).split('>'):[];
       navRestoring=false;navSuppress++;try{setRecordStep(step)}finally{navSuppress--}
       resetScroll('record');focusHeading('record');
       navStack[navStack.length-1]=navState();try{history.replaceState(navState(),'')}catch(e){}
@@ -1392,7 +1435,7 @@ startHeroTyping();initializeEffects();
   /* v43-claude: 로그인 후 원래 보던 화면으로 돌아감, 로그인 상태 저장 */
   function enterSite(provider){
     clearErrors();
-    safeSet('judolog-login',provider);renderAccountEntry();
+    safeSet('judolog-login',provider);renderAccountEntry();renderHome();
     const fromStart=loginReturnScreen==='onboard';quietShow(fromStart?'home':loginReturnScreen,fromStart);
     askNotice('프로토타입에서는 수련 기록이 이 기기에만 저장됩니다.',{title:'로그인했습니다'});
   }
@@ -1410,17 +1453,26 @@ startHeroTyping();initializeEffects();
     if(!value){fail(email,'이메일을 입력해주세요.');return}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){fail(email,'이메일 형식을 확인해주세요. 예: judo@example.com');return}
     if(!password.value){fail(password,'비밀번호를 입력해주세요.');return}
+    if(password.value.length<8){fail(password,'비밀번호는 8자 이상이에요. 지금 '+password.value.length+'자입니다.');return}
+    safeSet('judolog-login-name',value.split('@')[0].slice(0,12));
     enterSite('email');
   });
-  document.getElementById('loginLater').addEventListener('click',()=>{const fromStart=loginReturnScreen==='onboard';quietShow(fromStart?'home':loginReturnScreen,fromStart)});
-  document.getElementById('onboardStart').addEventListener('click',()=>quietShow(safeGet('judolog-login')?'home':'login',true));
+  /* v56-claude: 로그인 화면에 들어오면 초점은 제목. 제목 → 나중에 → 이메일 순서로 Tab 이동 */
+  (()=>{const title=document.getElementById('loginTitle'),later=document.getElementById('loginLater');
+    title.addEventListener('keydown',e=>{if(e.key==='Tab'&&!e.shiftKey){e.preventDefault();later.focus()}});
+    later.addEventListener('keydown',e=>{if(e.key==='Tab'&&!e.shiftKey){e.preventDefault();email.focus()}});
+    email.addEventListener('keydown',e=>{if(e.key==='Tab'&&e.shiftKey){e.preventDefault();later.focus()}});})();
+  document.getElementById('loginLater').addEventListener('click',()=>{safeSet('judolog-skip-login','1');const fromStart=loginReturnScreen==='onboard';quietShow(fromStart?'home':loginReturnScreen,fromStart)});
+  document.getElementById('onboardStart').addEventListener('click',()=>quietShow(safeGet('judolog-login')||safeGet('judolog-skip-login')?'home':'login',true));
   document.querySelectorAll('.login-links button').forEach(button=>button.addEventListener('click',()=>askNotice('프로토타입에서는 아직 지원하지 않는 기능입니다.\n간편 로그인으로 시작해 보세요.',{title:button.textContent.trim()+' 준비 중'})));
+  document.getElementById('loginNudgeGo')?.addEventListener('click',()=>{safeSet('judolog-login-nudge','1');renderLoginNudge();show('login')});
+  document.getElementById('loginNudgeClose')?.addEventListener('click',()=>{safeSet('judolog-login-nudge','1');renderLoginNudge();showToast('오른쪽 위 로그인 버튼으로 언제든 로그인할 수 있어요.');$('#homeGreeting')?.focus({preventScroll:true})});
   document.getElementById('accountEntry').addEventListener('click',async()=>{
     if(!safeGet('judolog-login')){show('login');return}
-    if(await askConfirm('로그아웃해도 이 기기에 저장된 수련 기록은 그대로 남습니다.',{title:'로그아웃할까요?',okText:'로그아웃'})){safeSet('judolog-login',null);renderAccountEntry()}
+    if(await askConfirm('로그아웃해도 이 기기에 저장된 수련 기록은 그대로 남습니다.',{title:'로그아웃할까요?',okText:'로그아웃'})){safeSet('judolog-login',null);safeSet('judolog-login-name',null);safeSet('judolog-skip-login',null);renderAccountEntry();renderHome()}
   });
   renderAccountEntry();
-  document.querySelectorAll('[data-social-login]').forEach(button=>button.addEventListener('click',()=>enterSite(button.dataset.socialLogin)));
+  document.querySelectorAll('[data-social-login]').forEach(button=>button.addEventListener('click',()=>{safeSet('judolog-login-name',null);enterSite(button.dataset.socialLogin)}));
 })();
 </script>
 <style id="v52-claude">
@@ -1598,8 +1650,7 @@ startHeroTyping();initializeEffects();
 .phone .tech-video-modal-body small{color:var(--muted)!important}
 </style>
 
-<script>/* v52-claude: 다른 날짜 칸을 누르면 달력 열기 */
-(function(){const i=document.getElementById("recordDay");if(!i)return;i.closest(".date-pick").addEventListener("click",e=>{if(e.target===i&&typeof i.showPicker==="function"){try{i.showPicker()}catch(_){}}})})();</script>
+<!-- v57-claude: v52 showPicker 스크립트 제거 (앱 안 달력으로 대체) -->
 <style id="v54-claude">
 /* v54-claude */
 /* 2순위: SVG 아이콘 공통 (선 2px) */
@@ -1630,5 +1681,185 @@ startHeroTyping();initializeEffects();
 /* 4순위: PC 헤더 가운데 문구를 페이지 정중앙에 */
 @media(min-width:1280px){.header{position:relative}.header>p{position:absolute;left:50%;top:29px;transform:translateX(-50%);margin:0;white-space:nowrap}}
 </style>
+
+<style id="v56-claude">
+/* v56-claude: UX 6차 목록 1~15 */
+.jl-sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* 9. 로그인 권유 (기록 5개째, 1회) */
+.phone .login-nudge{display:grid;gap:4px;width:calc(100% - 40px);margin:0 20px 12px;padding:12px 12px 4px;border:1px solid var(--line-strong);border-radius:4px;background:var(--surface-raised);color:var(--text)}
+.phone .login-nudge[hidden]{display:none}
+.phone .login-nudge b{font-size:14px}
+.phone .login-nudge p{margin:0;font-size:12px;line-height:1.5;color:var(--text-sub)}
+.phone .login-nudge-actions{display:flex;gap:16px}
+.phone .login-nudge-actions button{min-height:44px;padding:0;border:0;background:none;font:inherit;font-size:14px;font-weight:700;color:var(--text);text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:4px}
+.phone .login-nudge-actions #loginNudgeClose{color:var(--text-sub);text-decoration:none}
+@media(hover:hover){.phone .login-nudge-actions button:hover{text-decoration-color:var(--text)}}
+/* 11. 초기화: 전체 기록 맨 아래 */
+#history .data-reset{display:block;margin:32px auto 24px}
+/* 13. 통계 한 줄 */
+#detail .stats{display:none!important}
+.phone .detail-summary{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0 16px;font-size:12px;color:var(--muted)}
+.phone .detail-summary[hidden]{display:none}
+.phone .detail-summary b{color:var(--text-sub);font-weight:700}
+/* 14. 수련일지 사진 285 → 220px */
+.phone.detail .media{height:220px!important}
+/* 6. 가득 찬 글자 수 안내 */
+.phone .char-count.is-full{color:var(--danger)}
+</style>
+
+<div class="jl-cal" id="jlCal" hidden>
+<div class="jl-cal-backdrop" data-cal-close></div>
+<div class="jl-cal-card" role="dialog" aria-modal="true" aria-labelledby="jlCalTitle">
+<div class="jl-cal-head"><button type="button" class="jl-cal-nav" id="jlCalPrev" aria-label="이전 달"></button><h3 id="jlCalTitle"></h3><button type="button" class="jl-cal-nav" id="jlCalNext" aria-label="다음 달"></button></div>
+<div class="jl-cal-week" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+<div class="jl-cal-grid" id="jlCalGrid" role="group" aria-labelledby="jlCalTitle"></div>
+<p class="jl-cal-note">오늘 이후 날짜는 고를 수 없어요.</p>
+<button type="button" class="jl-cal-cancel" data-cal-close>닫기</button>
+</div>
+</div>
+
+<style id="v57-claude">
+/* v57-claude: 다른 날짜 = 버튼 + 앱 안 달력 */
+.phone .date-choices .date-pick{cursor:pointer}
+.phone .date-choices .date-pick span::after{content:none!important}
+.phone .jl-cal{position:absolute;inset:0;z-index:300;display:flex;flex-direction:column;justify-content:flex-end}
+.phone .jl-cal[hidden]{display:none}
+.phone .jl-cal-backdrop{position:absolute;inset:0;background:#0a0a0acc}
+.phone .jl-cal-card{position:relative;margin:0 8px 8px;padding:16px 16px 8px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--text);animation:jlCalIn 180ms cubic-bezier(.2,0,0,1)}
+@keyframes jlCalIn{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.phone .jl-cal-card{animation:none}}
+.phone .jl-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.phone .jl-cal-head h3{margin:0;font-size:16px;font-weight:700}
+.phone .jl-cal-nav{position:relative;width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--text)}
+.phone .jl-cal-nav .jl-i{position:absolute;inset:0;margin:auto;width:20px;height:20px}
+.phone .jl-cal-nav.is-next .jl-i{transform:scaleX(-1)}
+.phone .jl-cal-nav:disabled{color:var(--muted);opacity:.4;cursor:not-allowed}
+.phone .jl-cal-week,.phone .jl-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.phone .jl-cal-week span{font-size:12px;font-weight:700;color:var(--muted);padding:4px 0}
+.phone .jl-cal-day{height:44px;padding:0;border:1px solid transparent;border-radius:4px;background:transparent;color:var(--text);font:500 14px 'Noto Sans KR',sans-serif}
+.phone .jl-cal-day.is-today{border-color:var(--line-strong);font-weight:700}
+.phone .jl-cal-day[aria-pressed=true]{border-color:var(--gold);background:var(--surface-raised);font-weight:700}
+.phone .jl-cal-day:disabled{color:var(--muted);opacity:.4;cursor:not-allowed}
+.phone .jl-cal-day:focus-visible,.phone .jl-cal-nav:focus-visible,.phone .jl-cal-cancel:focus-visible{outline:2px solid var(--text-sub);outline-offset:2px}
+@media(hover:hover){.phone .jl-cal-day:not(:disabled):not([aria-pressed=true]):hover,.phone .jl-cal-nav:not(:disabled):hover{background:var(--surface-raised)}}
+.phone .jl-cal-note{margin:8px 0 0;font-size:12px;color:var(--muted);text-align:center}
+@media(max-width:360px){.phone .jl-cal-card{margin:0;padding:12px 8px 4px;border-radius:8px 8px 0 0}.phone .jl-cal-week,.phone .jl-cal-grid{gap:0}}
+.phone .jl-cal-cancel{display:block;width:100%;min-height:44px;margin-top:4px;border:0;background:transparent;color:var(--text-sub);font:700 14px 'Noto Sans KR',sans-serif}
+</style>
+
+<script>
+/* v57-claude: 앱 안 달력 — 기기·브라우저와 상관없이 같은 달력, 미래 날짜는 고를 수 없음 */
+(function(){
+  const cal=document.getElementById('jlCal'),grid=document.getElementById('jlCalGrid'),title=document.getElementById('jlCalTitle'),prev=document.getElementById('jlCalPrev'),next=document.getElementById('jlCalNext'),btn=document.getElementById('recordDayBtn'),inp=document.getElementById('recordDay');
+  if(!cal||!btn||!inp)return;
+  document.getElementById('record').appendChild(cal);
+  prev.innerHTML=JL_I.back;next.innerHTML=JL_I.back;next.classList.add('is-next');
+  let view=null,focusDay=null;
+  const pad=n=>String(n).padStart(2,'0'),key=(y,m,d)=>y+'-'+pad(m+1)+'-'+pad(d);
+  function render(){
+    const today=todayStr(),[ty,tm]=today.split('-').map(Number),y=view.getFullYear(),m=view.getMonth();
+    title.textContent=y+'년 '+(m+1)+'월';
+    const atMax=y>ty||(y===ty&&m+1>=tm);next.disabled=atMax;next.setAttribute('aria-disabled',String(atMax));
+    const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+    let html='';for(let i=0;i<first;i++)html+='<span class="jl-cal-empty"></span>';
+    for(let d=1;d<=days;d++){const k=key(y,m,d),future=k>today,sel=k===recordDay,isToday=k===today;
+      html+=`<button type="button" class="jl-cal-day${isToday?' is-today':''}" data-cal-day="${k}" ${future?'disabled aria-disabled="true"':''} aria-pressed="${sel}" aria-label="${m+1}월 ${d}일 ${'일월화수목금토'[new Date(y,m,d).getDay()]}요일${isToday?', 오늘':''}${future?', 고를 수 없음':''}" tabindex="-1">${d}</button>`}
+    grid.innerHTML=html;
+  }
+  function focusOn(k){const b=grid.querySelector(`[data-cal-day="${k}"]`);if(b&&!b.disabled){grid.querySelectorAll('.jl-cal-day').forEach(x=>x.tabIndex=-1);b.tabIndex=0;b.focus({preventScroll:true});focusDay=k;return true}return false}
+  function open(){
+    const base=recordDay||todayStr();const [y,m]=base.split('-').map(Number);view=new Date(y,m-1,1);render();
+    cal.hidden=false;cal.classList.remove('is-out');jlIsolate(cal,true,document.getElementById('record'));
+    if(!focusOn(base))focusOn(todayStr());
+  }
+  window.jlCalClose=function(returnFocus){if(cal.hidden)return;cal.hidden=true;jlIsolate(cal,false);if(returnFocus)btn.focus({preventScroll:true})};
+  function pick(k){if(!k||k>todayStr())return;inp.value=k;inp.dispatchEvent(new Event('change',{bubbles:true}));jlCalClose(true)}
+  btn.addEventListener('click',open);
+  cal.addEventListener('click',e=>{const d=e.target.closest('[data-cal-day]');if(d&&!d.disabled){pick(d.dataset.calDay);return}if(e.target.closest('[data-cal-close]'))jlCalClose(true)});
+  prev.addEventListener('click',()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render();const first=grid.querySelector('.jl-cal-day:not([disabled])');first&&(first.tabIndex=0)});
+  next.addEventListener('click',()=>{if(next.disabled)return;view=new Date(view.getFullYear(),view.getMonth()+1,1);render();const first=grid.querySelector('.jl-cal-day:not([disabled])');first&&(first.tabIndex=0)});
+  cal.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.preventDefault();jlCalClose(true);return}
+    const cur=e.target.closest&&e.target.closest('[data-cal-day]');if(!cur)return;
+    const step={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];if(!step)return;e.preventDefault();
+    const [y,m,d]=cur.dataset.calDay.split('-').map(Number);const t=new Date(y,m-1,d+step),k=key(t.getFullYear(),t.getMonth(),t.getDate());
+    if(k>todayStr())return;
+    if(t.getMonth()!==view.getMonth()||t.getFullYear()!==view.getFullYear()){view=new Date(t.getFullYear(),t.getMonth(),1);render()}
+    focusOn(k);
+  });
+})();
+</script>
+
+<style id="v58-claude">
+/* v58-claude: 전수 테스트 수정 */
+/* 1. 저장 완료 화면: 내용이 길거나 화면이 짧으면 스크롤, 짧으면 세로 가운데 */
+.phone .saved.show{display:flex!important;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;padding:24px 28px 32px!important}
+.phone .saved.show>:first-child{margin-top:auto!important}
+.phone .saved.show>:last-child{margin-bottom:auto!important}
+.phone .saved.show>*{flex-shrink:0}
+.phone .saved.show .saved-hint{order:2;margin-bottom:auto!important}
+.phone .saved.show #viewSkill{margin-bottom:0!important}
+/* 2. 홈 인사: 세 줄이 되어도 아래 문구가 잘리지 않게 높이 자동 */
+.phone.home .welcome{height:auto!important;min-height:170px}
+.phone.home .welcome-copy{position:relative!important;left:auto;top:auto!important;padding:20px 18px 4px}
+/* 3. 입력 라벨: 기술명이 길어도 "선택"이 한 글자씩 깨지지 않게 */
+.phone .form-label{gap:8px}
+.phone .form-label b{min-width:0}
+.phone .form-label small{white-space:nowrap;flex-shrink:0}
+/* 8. 직접 추가한 기술 카드: 한 줄 전체 폭, 수정·삭제 44px */
+.phone .picker-grid>.picker-card-wrap,.phone .picker-grid>.custom-category-wrap{grid-column:1/-1}
+.phone .picker-item-actions{display:flex!important;gap:4px;width:auto!important}
+.phone .picker-item-actions .custom-item-action,.phone .picker-item-actions .delete-tech{min-height:44px!important;min-width:52px}
+.phone .custom-category-actions .custom-item-action{min-height:44px;min-width:48px}
+/* 11. 초기화 링크 숨김 상태 */
+#history .data-reset[hidden]{display:none!important}
+</style>
+
+<script>
+/* v58-claude: 자유대련 횟수를 고르면 오류 문구 지움 / 기록 변경 시 초기화 링크 표시 갱신 */
+(function(){
+  const clr=()=>{if(!document.getElementById('randoriDone').checked||Number(document.getElementById('randoriCount').value)>=1)document.getElementById('step3Error').textContent=''};
+  document.getElementById('randoriNumberList').addEventListener('click',()=>setTimeout(clr,0));
+  document.getElementById('randoriCount').addEventListener('input',clr);
+  document.getElementById('randoriDone').addEventListener('change',clr);
+  const orig=window.afterRecordsChanged;if(typeof afterRecordsChanged==='function'){const o=afterRecordsChanged;window.afterRecordsChanged=function(){o.apply(this,arguments);jlResetVisibility()}}
+  jlResetVisibility();
+})();
+</script>
+
+<style id="v59-claude">
+/* v59-claude: 저장 완료 화면 요약 상자 제거 (사용자 결정: 저장 직후엔 "저장됐다"만 확인, 자세한 내용은 전체 기록·수련일지) */
+.phone .saved .saved-summary{display:none!important}
+</style>
+
+<style id="v60-claude">
+/* v60-claude: PC(마우스)에서는 칩 줄 아래에 얇은 스크롤바를 보여 옆으로 더 있다는 것을 알림 */
+@media(hover:hover) and (pointer:fine){
+  .phone .history-filter{scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent;padding-bottom:8px;cursor:grab}
+  .phone .history-filter::-webkit-scrollbar{display:block;height:6px}
+  .phone .history-filter::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:3px}
+  .phone .history-filter.is-dragging{cursor:grabbing;user-select:none}
+  .phone .history-filter.is-dragging *{pointer-events:none}
+}
+</style>
+
+<script>
+/* v60-claude: 가로로 넘기는 칩 줄 — PC 마우스 휠·끌기로도 넘기기, 고른 칩은 화면 안으로 */
+function jlHScroll(el){
+  if(!el||el.dataset.hscroll)return;el.dataset.hscroll='1';
+  el.addEventListener('wheel',e=>{if(el.scrollWidth<=el.clientWidth+1)return;if(Math.abs(e.deltaX)>Math.abs(e.deltaY))return;const d=e.deltaY*(e.deltaMode===1?16:1),max=el.scrollWidth-el.clientWidth;
+    if((d>0&&el.scrollLeft<max-1)||(d<0&&el.scrollLeft>0)){e.preventDefault();el.scrollLeft=Math.max(0,Math.min(max,el.scrollLeft+d))}},{passive:false});
+  let sx=0,sl=0,down=false,dragged=false;
+  el.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;down=true;dragged=false;sx=e.clientX;sl=el.scrollLeft});
+  el.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-sx;if(!dragged&&Math.abs(dx)>6){dragged=true;el.classList.add('is-dragging');try{el.setPointerCapture(e.pointerId)}catch(_){}}if(dragged)el.scrollLeft=sl-dx});
+  const end=()=>{if(!down)return;down=false;el.classList.remove('is-dragging');if(dragged){const stop=ev=>{ev.stopPropagation();ev.preventDefault()};el.addEventListener('click',stop,{capture:true,once:true});setTimeout(()=>el.removeEventListener('click',stop,{capture:true}),0)}};
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);el.addEventListener('lostpointercapture',end);
+}
+function jlRevealSelected(el){const c=el&&el.querySelector('[aria-pressed=true]');if(!c||el.scrollWidth<=el.clientWidth+1)return;const l=c.offsetLeft-el.offsetLeft,r=l+c.offsetWidth;if(l<el.scrollLeft+8)el.scrollLeft=Math.max(0,l-16);else if(r>el.scrollLeft+el.clientWidth-32)el.scrollLeft=r-el.clientWidth+40}
+(function(){
+  ['historyFilter','detailTechList'].forEach(id=>jlHScroll(document.getElementById(id)));
+  if(typeof renderHistory==='function'){const o=renderHistory;window.renderHistory=function(){const f=document.getElementById('historyFilter'),keep=f?f.scrollLeft:0;o.apply(this,arguments);if(f){f.scrollLeft=keep;jlRevealSelected(f)}}}
+})();
+</script>
 </body>
 </html>
