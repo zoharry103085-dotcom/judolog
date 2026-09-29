@@ -745,7 +745,7 @@ button{font-size:14px}
 </details>
 </aside>
 </main>
-<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v62 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
+<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v63 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
 <div class="mobiletip">상단 탭을 눌러 화면을 바꿔보세요.</div>
 </div>
 <div class="judo-cursor" id="judoCursor" aria-hidden="true">柔</div>
@@ -2124,5 +2124,11 @@ function jlRevealSelected(el){const c=el&&el.querySelector('[aria-pressed=true]'
 })();
 
 </script>
+<style id="v63-claude">
+/* v63-claude: 가로로 넘기는 칩 줄의 스크롤바 숨김 (PC 포함). 넘기기는 손가락·마우스 휠·끌기로 그대로 가능, 오른쪽 페이드로 "더 있음" 표시 */
+.phone .history-filter,.phone #detailTechList,.phone .randori-number-list{scrollbar-width:none!important}
+.phone .history-filter::-webkit-scrollbar,.phone #detailTechList::-webkit-scrollbar,.phone .randori-number-list::-webkit-scrollbar{display:none!important;height:0!important}
+@media(hover:hover) and (pointer:fine){.phone .history-filter,.phone #detailTechList{padding-bottom:0!important}}
+</style>
 </body>
 </html>
