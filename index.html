@@ -745,7 +745,7 @@ button{font-size:14px}
 </details>
 </aside>
 </main>
-<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v61 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
+<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v62 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
 <div class="mobiletip">상단 탭을 눌러 화면을 바꿔보세요.</div>
 </div>
 <div class="judo-cursor" id="judoCursor" aria-hidden="true">柔</div>
@@ -756,8 +756,8 @@ var JL_STORAGE_OK=true;
 var JL_STORE=(function(){try{var s=window.localStorage;s.setItem('__jl_test','1');s.removeItem('__jl_test');return s}catch(e){JL_STORAGE_OK=false;var m={};return{getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}}})();
 </script>
 <script>
-const copy={onboard:['무슨 앱인지<br>첫 화면에서 말하기', '도장 사진 위에 이 앱이 하는 일을 한 문장으로 적고, 시작 버튼 하나만 두었습니다.', ['문제 · 분위기만 있고 무엇을 하는 앱인지 모호했음', '의도 · "코치 피드백을 기술별로 모아두는 노트"라고 직접 설명', '결과 · 처음 한 번만 입문 → 로그인, 그다음부터는 수련 화면으로 바로']],home:['오늘 정리할 것과<br>이어 쓸 것을 먼저', '오늘의 수련 기록 버튼을 가장 위에 두고, 쓰다가 멈춘 기록이 있으면 그 위에 이어 쓰기 카드를 띄웁니다.', ['문제 · 쓰다가 나가면 작성 내용이 사라졌음', '의도 · 입력할 때마다 이 기기에 임시 저장', '결과 · 홈에서 한 번 눌러 이어 쓰기']],record:['운동이 끝난 뒤<br>기술별로 정리하기', '최근 기술이나 검색으로 오늘 연습한 기술을 고르고, 기술마다 받은 코치 피드백을 따로 남깁니다.', ['문제 · 여러 기술에 피드백을 받아도 입력칸이 하나뿐이었음', '의도 · 집중 기술은 펼치고, 나머지 기술은 필요할 때 추가', '결과 · 어제 한 수련도 날짜를 골라 나중에 정리']],detail:['대회 전에<br>기술 하나만 다시 보기', '기술을 고르면 그 기술에 받은 피드백과 목표가 날짜순으로 모두 나옵니다.', ['문제 · 지난 피드백을 보려면 전체 기록을 스크롤해야 했음', '의도 · 다시 꺼내 보는 기준은 날짜가 아니라 기술 (가설)', '결과 · 기술을 고르면 가장 최근 코치 피드백이 첫 화면에']]};
-copy.login=['시작할 때 로그인,<br>건너뛰기도 가능', '처음 들어오면 입문 다음에 로그인 화면을 보여주고, "나중에"를 누르면 수련 화면으로 들어가 다음부터는 묻지 않습니다.', ['문제 · 로그인 없이 쓰면 기기를 바꿀 때 기록을 이어갈 수 없음', '의도 · 입문 다음에 로그인을 권하되 강제하지 않음', '결과 · "나중에" 한 번이면 다음부터 수련으로 바로, 기록 5개째에 한 번만 다시 권함']];
+const copy={onboard:['무슨 앱인지<br>첫 화면에서 말하기', '도장 사진 위에 이 앱이 하는 일을 한 문장으로 적고, 시작 버튼 하나만 두었습니다.', ['문제 · 분위기만 있고 무엇을 하는 앱인지 모호했음', '의도 · "코치 피드백을 기술별로 모아두는 노트"라고 직접 설명', '결과 · 들어올 때마다 입문부터, 로그인했으면 시작 버튼 한 번에 수련으로']],home:['오늘 정리할 것과<br>이어 쓸 것을 먼저', '오늘의 수련 기록 버튼을 가장 위에 두고, 쓰다가 멈춘 기록이 있으면 그 위에 이어 쓰기 카드를 띄웁니다.', ['문제 · 쓰다가 나가면 작성 내용이 사라졌음', '의도 · 입력할 때마다 이 기기에 임시 저장', '결과 · 홈에서 한 번 눌러 이어 쓰기']],record:['운동이 끝난 뒤<br>기술별로 정리하기', '최근 기술이나 검색으로 오늘 연습한 기술을 고르고, 기술마다 받은 코치 피드백을 따로 남깁니다.', ['문제 · 여러 기술에 피드백을 받아도 입력칸이 하나뿐이었음', '의도 · 집중 기술은 펼치고, 나머지 기술은 필요할 때 추가', '결과 · 어제 한 수련도 날짜를 골라 나중에 정리']],detail:['대회 전에<br>기술 하나만 다시 보기', '기술을 고르면 그 기술에 받은 피드백과 목표가 날짜순으로 모두 나옵니다.', ['문제 · 지난 피드백을 보려면 전체 기록을 스크롤해야 했음', '의도 · 다시 꺼내 보는 기준은 날짜가 아니라 기술 (가설)', '결과 · 기술을 고르면 가장 최근 코치 피드백이 첫 화면에']]};
+copy.login=['시작할 때 로그인,<br>건너뛰기도 가능', '입문 다음에 로그인 화면을 보여줍니다. 로그인하지 않았다면 들어올 때마다 권하고, "나중에"를 누르면 바로 수련 화면으로 들어갑니다.', ['문제 · 로그인 없이 쓰면 기기를 바꿀 때 기록을 이어갈 수 없음', '의도 · 입문 다음에 로그인을 권하되 강제하지 않음', '결과 · 로그인하면 다음부터 로그인 화면 없이 수련으로, 기록 5개째에 한 번 더 권함']];
 copy.history=['날짜별로 보고<br>기술로 걸러 보기', '최신순 기록 카드 위에 기술 칩을 두어, 원하는 기술이 들어간 기록만 남겨 볼 수 있게 했습니다.', ['문제 · 기록이 쌓일수록 원하는 기록을 찾기 어려움', '의도 · 날짜순은 유지하고 기술로만 걸러 보기', '결과 · 삭제해도 6초 안에 되돌리기 가능']];
 const techData={};
 const techniqueCatalog={
@@ -1389,7 +1389,7 @@ initializeRandoriPicker();initializeTechVideos();setRecordStep(1);renderHome();r
 /* v43-claude: 첫 방문은 입문, 다시 방문하면 홈으로 바로 (로그인은 필요할 때만) */
 /* v50-claude: 로그인 안 했으면 입문 → 로그인 → 수련, 로그인했으면 수련으로 바로 */
 /* v55-claude: 로그인했거나 "나중에"를 누른 적 있으면 수련으로 바로 */
-show(safeGet('judolog-login')||safeGet('judolog-skip-login')?'home':'onboard');
+show('onboard');
 function resetNavTo(){navStack.length=0;navStack.push(navState());try{history.replaceState(navState(),'')}catch(e){}}
 /* 시작 흐름(입문→로그인→수련)은 뒤로가기 기록을 쌓지 않음: 수련 화면에서 뒤로가기 = 앱 밖 */
 function quietShow(id,replace){if(!replace){show(id);return}navSuppress++;try{show(id)}finally{navSuppress--}resetNavTo()}
@@ -1463,7 +1463,7 @@ startHeroTyping();initializeEffects();
     later.addEventListener('keydown',e=>{if(e.key==='Tab'&&!e.shiftKey){e.preventDefault();email.focus()}});
     email.addEventListener('keydown',e=>{if(e.key==='Tab'&&e.shiftKey){e.preventDefault();later.focus()}});})();
   document.getElementById('loginLater').addEventListener('click',()=>{safeSet('judolog-skip-login','1');const fromStart=loginReturnScreen==='onboard';quietShow(fromStart?'home':loginReturnScreen,fromStart)});
-  document.getElementById('onboardStart').addEventListener('click',()=>quietShow(safeGet('judolog-login')||safeGet('judolog-skip-login')?'home':'login',true));
+  document.getElementById('onboardStart').addEventListener('click',()=>quietShow(safeGet('judolog-login')?'home':'login',true));
   document.querySelectorAll('.login-links button').forEach(button=>button.addEventListener('click',()=>askNotice('프로토타입에서는 아직 지원하지 않는 기능입니다.\n간편 로그인으로 시작해 보세요.',{title:button.textContent.trim()+' 준비 중'})));
   document.getElementById('loginNudgeGo')?.addEventListener('click',()=>{safeSet('judolog-login-nudge','1');renderLoginNudge();show('login')});
   document.getElementById('loginNudgeClose')?.addEventListener('click',()=>{safeSet('judolog-login-nudge','1');renderLoginNudge();showToast('오른쪽 위 로그인 버튼으로 언제든 로그인할 수 있어요.');$('#homeGreeting')?.focus({preventScroll:true})});
