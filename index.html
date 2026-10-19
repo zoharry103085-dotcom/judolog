@@ -957,6 +957,8 @@ img{max-width:100%}
 @container (max-height:800px){.home.has-draft .welcome-copy p,.home.has-draft .hl-item small{display:none}.home.has-draft .draft-banner{margin-bottom:8px}}
 @container (max-height:700px){.home.has-draft .draft-banner{min-height:44px;margin-bottom:10px;padding-top:2px;padding-bottom:2px}.home.has-draft .draft-dismiss{top:0}.home.has-draft .home-record{min-height:44px;margin-bottom:10px}}
 @container (max-height:600px){.home.has-draft .draft-wrap+.section-title{display:none}.home.has-draft .welcome{margin-bottom:6px}}
+/* v95: 아이폰에서 빠르게 두 번 누르면(확인창 연속 버튼 등) 화면이 확대되는 것 막기 — 두 손가락 확대는 그대로 됨 */
+html,body,*{touch-action:manipulation}
 .home .screen{display:flex;flex-direction:column}
 .home .screen>*{flex-shrink:0}
 .home .screen::after{content:"";flex:0 0 6px}
@@ -1282,7 +1284,7 @@ img{max-width:100%}
 </details>
 </aside>
 </main>
-<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v94 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
+<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v95 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
 <div class="mobiletip">상단 탭을 눌러 화면을 바꿔보세요.</div>
 </div>
 <div class="judo-cursor" id="judoCursor" aria-hidden="true">柔</div>
