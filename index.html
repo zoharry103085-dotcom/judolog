@@ -342,11 +342,11 @@ img{max-width:100%}
 .home .hl-ring{position:relative;width:68px;height:68px;padding:3px;border-radius:50%;background:var(--line-strong)}
 .home .hl-item.is-new .hl-ring{background:var(--grad)}
 .home .hl-ring img{display:block;width:100%;height:100%;border:3px solid var(--bg);border-radius:50%;object-fit:cover;background:var(--raised)}
-.home .hl-ring i{position:absolute;right:-2px;bottom:-2px;min-width:22px;height:22px;padding:0 5px;border:2px solid var(--bg);border-radius:11px;background:var(--raised);color:var(--text);font:700 11px/18px var(--font-en);font-style:normal}
+.home .hl-ring i{position:absolute;right:-2px;bottom:-2px;min-width:22px;height:22px;padding:0 5px;border:2px solid var(--bg);border-radius:11px;background:var(--raised);color:var(--text);font:700 12px/18px var(--font-en);font-style:normal}
 .home .hl-add .hl-ring{display:grid;place-items:center;padding:0;border:1.5px dashed var(--line-strong);background:none;color:var(--text-sub)}
 .home .hl-add .hl-ring svg{width:26px;height:26px}
 .home .hl-item b{max-width:72px;overflow:hidden;font:600 12px/16px var(--font);text-overflow:ellipsis;white-space:nowrap}
-.home .hl-item small{margin-top:-4px;font-size:11px;line-height:14px;color:var(--muted)}
+.home .hl-item small{margin-top:-4px;font-size:12px;line-height:14px;color:var(--muted)}
 .home .hl-item:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:12px}
 .home .hl-empty{margin:0;font-size:13px;line-height:20px;color:var(--muted)}
 .home .hl-sheet{position:absolute;inset:0;z-index:180;display:flex;align-items:flex-end;background:rgba(0,0,0,.62)}
@@ -358,6 +358,16 @@ img{max-width:100%}
 .home .hl-x svg,.home .hl-ic svg{width:22px;height:22px}
 .home .hl-prev{display:block;width:100%;height:240px;border-radius:16px;background:#000;object-fit:contain}
 .home .hl-split{display:grid;gap:8px}
+.hl-batch{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:-4px 0;padding:4px 0}.hl-batch::-webkit-scrollbar{display:none}.hl-batch[hidden]{display:none}
+.hl-bi{position:relative;flex:0 0 64px}
+.hl-bi>button:first-child{display:block;width:64px;height:64px;padding:0;border:2px solid transparent;border-radius:12px;overflow:hidden;background:#000;color:var(--text-sub)}
+.hl-bi>button:first-child[aria-current=true]{border-color:var(--orange)}
+.hl-bi img{display:block;width:100%;height:100%;object-fit:cover}
+.hl-bi small{position:absolute;left:4px;bottom:4px;padding:0 4px;border-radius:4px;background:rgba(0,0,0,.72);color:#fff;font:600 12px/16px var(--font);pointer-events:none}
+.hl-bi .hl-bx{position:absolute;top:-6px;right:-6px;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:var(--raised);color:var(--text);display:grid;place-items:center;box-shadow:0 0 0 2px var(--surface)}
+.hl-bi .hl-bx::after{content:'';position:absolute;inset:-8px}
+.hl-bi .hl-bx svg{width:14px;height:14px}
+.hl-split p small{display:block;margin-top:4px;font-size:12px;line-height:18px;color:var(--muted)}
 .home .hl-segs{display:flex;gap:4px}
 .home .hl-segs span{flex:1;height:6px;border-radius:3px;background:var(--line-strong)}
 .home .hl-segs span.on{background:var(--grad)}
@@ -370,6 +380,9 @@ img{max-width:100%}
 .home .hl-chips button{min-height:40px;padding:0 14px;border:1px solid var(--line-strong);border-radius:20px;background:var(--raised);color:var(--text);font:600 14px var(--font)}
 .home .hl-chips button[aria-pressed=true]{border-color:transparent;background:var(--grad);color:var(--on-primary)}
 .home .hl-actions{display:grid;grid-template-columns:1fr 2fr;gap:8px}
+/* v92: 작은 휴대폰에서도 저장 버튼이 보이게 — 미리보기는 화면 높이에 맞춰 줄이고, 버튼 줄은 아래에 붙임 */
+.hl-card .hl-prev{height:clamp(140px,29cqh,240px)}
+.hl-actions{position:sticky;bottom:calc(-20px - env(safe-area-inset-bottom,0px));z-index:1;margin:0 -20px calc(-20px - env(safe-area-inset-bottom,0px));padding:12px 20px calc(20px + env(safe-area-inset-bottom,0px));background:linear-gradient(to bottom,transparent,var(--surface) 12px)}
 .home .hl-actions button{min-height:52px;border-radius:26px;font:700 16px/24px var(--font)}
 .home .hl-cancel{border:1px solid var(--line-strong);background:none;color:var(--text)}
 .home .hl-save{border:0;background:var(--grad);color:var(--on-primary)}
@@ -389,6 +402,10 @@ img{max-width:100%}
 .home .hl-player.is-muted .hl-ic .hl-wave{display:none}
 .home .hl-tap{position:absolute;top:72px;bottom:0;z-index:1;padding:0;border:0;background:none}
 .home .hl-tap-prev{left:0;width:30%}
+/* v94: 길게 눌러 멈출 때·썸네일을 길게 누를 때 휴대폰의 '이미지 저장/글자 선택' 메뉴가 뜨지 않게 */
+.home .hl-player,.home .hl-row,.home .hl-batch,.home .week-strip{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.home .hl-row img,.home .hl-batch img{-webkit-user-drag:none;pointer-events:none}
+.home .hl-tap{touch-action:manipulation}
 .home .hl-tap-next{right:0;width:70%}
 .home .hl-tap:focus-visible{outline:2px solid #fff;outline-offset:-4px}
 .home .hl-hint{position:absolute;left:0;right:0;bottom:24px;z-index:2;margin:0;text-align:center;font-size:12px;color:rgba(255,255,255,.7);pointer-events:none;transition:opacity .4s}
@@ -699,6 +716,8 @@ img{max-width:100%}
 .jl-dialog-msg{margin:0;font-size:14px;line-height:22px;color:var(--text-sub);white-space:pre-line}
 .jl-dialog-input{margin-top:12px}
 .jl-dialog-actions{display:flex;gap:8px;margin-top:20px}
+.jl-dialog-extra{display:block;width:100%;min-height:44px;margin-top:8px;background:none;border:0;color:var(--text-sub);font:inherit;font-size:13px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.jl-dialog-extra:active{color:var(--text)}
 .jl-dialog-actions button{flex:1;min-width:0}
 .jl-dialog-actions .jl-ok:not(.is-danger){min-height:48px;font-size:14px}
 .jl-dialog-actions .jl-ok.is-danger{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border:1px solid var(--danger);border-radius:24px;background:none;color:var(--danger);font:700 14px/22px var(--font)}
@@ -917,17 +936,27 @@ img{max-width:100%}
   .home .home-record{margin-bottom:10px}
   .home .skills,.home .week-section{margin-bottom:10px}
 }
-.home .week-strip{display:flex;gap:0;margin:0 -20px;padding:0 20px 2px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-padding:0 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+/* v90: 오늘+기록 있음의 바깥 테두리(4px)가 잘리지 않게 위아래 여유, 바깥 여백으로 상쇄해 배치는 그대로 */
+.home .week-strip{display:flex;gap:0;margin:-4px -20px;padding:4px 20px 6px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-padding:0 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 20px,#000 calc(100% - 20px),transparent 100%)}
 .home .week-strip::-webkit-scrollbar{display:none}
 .home .week-strip .day{flex:0 0 calc(100% / 7);scroll-snap-align:start}
 .home .week-strip .day.is-future{cursor:default}
 .home .week-strip .day.is-future b{background:none;color:var(--line-strong)}
 .home .week-strip .day.is-future small{opacity:.5}
-@media (max-width:380px){.home .week-strip{margin:0 -16px;padding:0 16px 2px;scroll-padding:0 16px}}
+@media (max-width:380px){.home .week-strip{margin:-4px -16px;padding:4px 16px 6px;scroll-padding:0 16px}}
 .home .week-strip{cursor:grab}
 .home .week-strip.is-dragging{cursor:grabbing;user-select:none}
 .home .week-strip.is-dragging .day{pointer-events:none}
+/* v91: 작성 중 띠를 한 줄(52px)로 — 띠가 생겨도 홈이 한 화면에 들어가게 */
+.home .draft-banner{display:flex;align-items:center;gap:8px;min-height:52px;margin-bottom:12px;padding:6px 52px 6px 16px;white-space:nowrap}
+.home .draft-banner b{flex:none;font-size:13px;line-height:20px;color:var(--orange)}
+.home .draft-banner span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:14px;line-height:20px;font-weight:700;color:var(--text)}
+.home .draft-banner em{flex:none;margin-top:0;font-size:13px}
+.home .draft-dismiss{top:4px}
+@container (max-height:800px){.home.has-draft .welcome-copy p,.home.has-draft .hl-item small{display:none}.home.has-draft .draft-banner{margin-bottom:8px}}
+@container (max-height:700px){.home.has-draft .draft-banner{min-height:44px;margin-bottom:10px;padding-top:2px;padding-bottom:2px}.home.has-draft .draft-dismiss{top:0}.home.has-draft .home-record{min-height:44px;margin-bottom:10px}}
+@container (max-height:600px){.home.has-draft .draft-wrap+.section-title{display:none}.home.has-draft .welcome{margin-bottom:6px}}
 .home .screen{display:flex;flex-direction:column}
 .home .screen>*{flex-shrink:0}
 .home .screen::after{content:"";flex:0 0 6px}
@@ -1030,7 +1059,7 @@ img{max-width:100%}
 </section>
 <p class="storage-warning" id="storageWarning" role="alert" hidden><b>이 브라우저에서는 기록이 저장되지 않아요.</b> 창을 닫으면 작성한 기록이 사라집니다. 브라우저 설정에서 사이트 데이터(쿠키)를 허용한 뒤 다시 열어주세요.</p>
 <button class="home-record" data-go="record">오늘의 수련 기록</button>
-<div class="draft-wrap"><button class="draft-banner" id="draftBanner" type="button" hidden><b>작성 중인 기록이 있어요</b><span id="draftBannerText"></span><em>이어서 쓰기</em></button><button class="draft-dismiss" id="draftDismiss" type="button" aria-label="임시 저장한 기록 지우기" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+<div class="draft-wrap"><button class="draft-banner" id="draftBanner" type="button" hidden><b>작성 중</b><span id="draftBannerText"></span><em>이어서 쓰기</em></button><button class="draft-dismiss" id="draftDismiss" type="button" aria-label="임시 저장한 기록 지우기" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
 <div class="section-title">
 <b>최근 수련 기록</b>
 
@@ -1052,7 +1081,7 @@ img{max-width:100%}
 <div class="section-title"><b id="hlTitle">내 하이라이트</b><small class="hl-note">이 휴대폰에만 저장돼요</small></div>
 <div class="hl-row" id="hlRow" role="list" aria-label="내 영상"></div>
 <p class="hl-empty" id="hlEmpty" hidden>대련·연습 영상을 올리면 15초씩 나눠 저장돼요</p>
-<input type="file" id="hlFile" accept="video/*" hidden>
+<input type="file" id="hlFile" accept="video/*" multiple hidden>
 </section>
 <div class="login-nudge" id="loginNudge" role="region" aria-labelledby="loginNudgeTitle" hidden><b id="loginNudgeTitle">수련 기록이 5개 모였어요</b><p>로그인하면 휴대폰을 바꿔도 기록을 이어서 볼 수 있어요.</p><div class="login-nudge-actions"><button type="button" id="loginNudgeGo">로그인하기</button><button type="button" id="loginNudgeClose">괜찮아요</button></div></div>
 </div>
@@ -1065,6 +1094,7 @@ img{max-width:100%}
 <div class="hl-card">
 <div class="hl-card-head"><b id="hlAddTitle">영상 추가</b><button type="button" class="hl-x" id="hlAddClose" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
 <video class="hl-prev" id="hlPrev" muted playsinline loop></video>
+<div class="hl-batch" id="hlBatch" role="list" aria-label="고른 영상" hidden></div>
 <div class="hl-split"><div class="hl-segs" id="hlSegs" aria-hidden="true"></div><p id="hlSplitText"></p></div>
 <div class="hl-field"><b>어떤 기술 영상인가요? <small>(선택)</small></b><div class="hl-chips" id="hlChips" role="group" aria-label="기술 선택"></div></div>
 <div class="hl-actions"><button type="button" class="hl-cancel" id="hlAddCancel">취소</button><button type="button" class="hl-save" id="hlAddSave">저장</button></div>
@@ -1252,7 +1282,7 @@ img{max-width:100%}
 </details>
 </aside>
 </main>
-<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v87 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
+<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v94 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
 <div class="mobiletip">상단 탭을 눌러 화면을 바꿔보세요.</div>
 </div>
 <div class="judo-cursor" id="judoCursor" aria-hidden="true">柔</div>
@@ -1337,7 +1367,7 @@ function draftMeaningful(){return !editingRecordId&&!$('#saved').classList.conta
 function saveDraft(){if(draftMute||!draftMeaningful())return;try{JL_STORE.setItem(DRAFT_KEY,JSON.stringify({selected:[...selectedTechs],current:currentTech,step:recordStep,feedback:$('#feedback').value,goal:$('#goal').value,extra:extraFeedback,open:[...extraOpen],randoriDone:$('#randoriDone').checked,randoriCount:$('#randoriCount').value,day:recordDay,dayPicked:!!window.jlDayPicked,savedAt:Date.now()}))}catch(e){}}
 function clearDraft(){try{JL_STORE.removeItem(DRAFT_KEY)}catch(e){}renderDraftBanner()}
 function describeDraft(d){const names=d.selected.map(techName);const when=new Intl.DateTimeFormat('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(d.savedAt||Date.now()));return (names.length?names[0]+(names.length>1?` 외 ${names.length-1}개`:''):'기술 선택 전')+' · '+(['기술 고르는 중','집중 기술 고르는 중','피드백 작성 중','저장 직전'][Math.min(4,Math.max(1,Number(d.step)||1))-1])+` · ${when} 저장`}
-function renderDraftBanner(){const b=$('#draftBanner');if(!b)return;const d=readDraft();b.hidden=!d;const x=$('#draftDismiss');if(x)x.hidden=!d;if(d){const t=describeDraft(d),i=t.lastIndexOf(' · ');$('#draftBannerText').innerHTML=escapeHtml(t.slice(0,i))+'<br>'+escapeHtml(t.slice(i+3).replace(/ 저장$/,' 임시 저장'))}}
+function renderDraftBanner(){const b=$('#draftBanner');if(!b)return;const d=readDraft();b.hidden=!d;const x=$('#draftDismiss');if(x)x.hidden=!d;if(d){const t=describeDraft(d),i=t.lastIndexOf(' · '),full=t.slice(0,i)+' · '+t.slice(i+3).replace(/ 저장$/,' 임시 저장');/* v91: 한 줄로 (홈 한 화면 유지) — 기술 이름만 보이고 나머지는 읽기용 */$('#draftBannerText').textContent=t.split(' · ')[0];b.setAttribute('aria-label','작성 중인 기록 이어서 쓰기: '+full);b.title=full}b.closest('.phone')?.classList.toggle('has-draft',!!d)}
 function restoreDraft(d){if(!d)return;draftMute++;navSuppress++;try{resetRecordDraft();
   d.selected.forEach(id=>{const m=findTechMeta(id);if(m){ensureTech(id,m.name,m.typeName,m.groupName);selectedTechs.add(id)}});
   currentTech=selectedTechs.has(d.current)?d.current:([...selectedTechs][0]||null);
@@ -1458,7 +1488,7 @@ function closeDialog(result){
   resolve(result);
 }
 function cancelOpenDialog(){if(activeDialog)closeDialog(activeDialog.cancelValue)}
-function openDialog({title='',message='',okText='확인',cancelText='취소',showCancel=true,danger=false,input=null,dismissValue}={}){
+function openDialog({title='',message='',okText='확인',cancelText='취소',showCancel=true,danger=false,input=null,dismissValue,extra=null}={}){
   cancelOpenDialog();
   return new Promise(resolve=>{
     const host=$('.phone.active')||document.body,opener=document.activeElement;
@@ -1473,7 +1503,9 @@ function openDialog({title='',message='',okText='확인',cancelText='취소',sho
     let cancelBtn=null;
     if(showCancel){cancelBtn=document.createElement('button');cancelBtn.type='button';cancelBtn.textContent=cancelText;cancelBtn.onclick=()=>closeDialog(cancelValue);actions.appendChild(cancelBtn)}
     const okBtn=document.createElement('button');okBtn.type='button';okBtn.className='jl-ok'+(danger?' is-danger':'');okBtn.textContent=okText;okBtn.onclick=()=>closeDialog(okValue());actions.appendChild(okBtn);
-    card.appendChild(actions);el.appendChild(card);
+    card.appendChild(actions);
+    if(extra){const xb=document.createElement('button');xb.type='button';xb.className='jl-dialog-extra';xb.textContent=extra.text;xb.onclick=()=>closeDialog(extra.value);card.appendChild(xb)}
+    el.appendChild(card);
     const jlOpenedAt=Date.now();/* v76: 뜬 직후 0.4초는 바깥 누르기 무시 (연타 방지) */
     el.addEventListener('click',event=>{if(event.target===el&&showCancel&&Date.now()-jlOpenedAt>400)closeDialog(dismissVal)});
     const onKey=event=>{
@@ -1903,14 +1935,52 @@ function hlMeta(url){return new Promise((res,rej)=>{const v=document.createEleme
 function hlSeek(v,t){return new Promise(res=>{let done=false;const fin=()=>{if(done)return;done=true;
     if(v.requestVideoFrameCallback){v.requestVideoFrameCallback(()=>res());setTimeout(res,400)}else setTimeout(res,150)};
   v.onseeked=()=>{v.onseeked=null;fin()};v.currentTime=t;setTimeout(fin,3000)})}
-async function hlThumb(v,d){
-  for(const at of [Math.min(0.6,d/2),d*.25,d*.5]){await hlSeek(v,at);
+async function hlThumb(v,d,s0=0){
+  for(const at of [Math.min(0.6,d/2),d*.25,d*.5]){await hlSeek(v,s0+at);
     try{const c=document.createElement('canvas');c.width=c.height=160;const x=c.getContext('2d'),s=Math.min(v.videoWidth,v.videoHeight)||1;
       x.fillStyle='#000';x.fillRect(0,0,160,160);x.drawImage(v,(v.videoWidth-s)/2,(v.videoHeight-s)/2,s,s,0,0,160,160);
       const px=x.getImageData(0,0,160,160).data;let sum=0;for(let i=0;i<px.length;i+=4*37)sum+=px[i]+px[i+1]+px[i+2];
       if(sum/(px.length/(4*37))>12)return c.toDataURL('image/jpeg',.72)}catch(e){return ''}}
   return ''}
-$('#hlFile').onchange=async e=>{const file=e.target.files&&e.target.files[0];e.target.value='';/* 같은 영상을 다시 골라도 반응하게 */if(!file)return;
+/* v89: 여러 개를 한 번에 고르면 한 화면에서 모아 저장 */
+const HL_BATCH_MAX=10;
+async function hlReadBatch(files){const items=[],skip={type:0,big:0,bad:0,over:0};
+  if(files.length>HL_BATCH_MAX){skip.over=files.length-HL_BATCH_MAX;files=files.slice(0,HL_BATCH_MAX)}
+  showToast(`영상 ${files.length}개 읽는 중…`,{duration:60000});
+  for(const file of files){
+    if(!/^video\//.test(file.type)){skip.type++;continue}
+    if(file.size>HL_MAX_MB*1048576){skip.big++;continue}
+    const url=URL.createObjectURL(file);let v;
+    try{v=await hlMeta(url)}catch(err){URL.revokeObjectURL(url);skip.bad++;continue}
+    const trimmed=v.duration>HL_MAX,d=trimmed?HL_MAX:v.duration;
+    const thumb=await hlThumb(v,d);v.removeAttribute('src');v.load();
+    items.push({file,url,dur:d,segs:hlSplit(d),thumb,trimmed})}
+  document.querySelectorAll('.jl-toast').forEach(t=>t.remove());
+  return {items,skip}}
+function hlBatchShow(i){const D=hlDraft,it=D.items[i];if(!it)return;D.cur=i;D.url=it.url;D.dur=it.dur;D.segs=it.segs;
+  $('#hlSegs').innerHTML=it.segs.map((s,k)=>`<span class="${k===0?'on':''}" style="flex:${(s[1]-s[0]).toFixed(1)}"></span>`).join('');
+  const pv=$('#hlPrev');pv.src=it.url;pv.ontimeupdate=()=>{if(pv.currentTime>=it.segs[0][1])pv.currentTime=0};pv.play().catch(()=>{});
+  $('#hlBatch').querySelectorAll('[data-bi]').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.bi===i)))}
+function hlBatchRender(){const D=hlDraft,n=D.items.length,total=D.items.reduce((a,it)=>a+it.segs.length,0);
+  $('#hlAddTitle').textContent=`영상 ${n}개 추가`;
+  const x='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  $('#hlBatch').innerHTML=D.items.map((it,i)=>`<div class="hl-bi" role="listitem"><button type="button" data-bi="${i}" aria-label="${i+1}번째 영상 미리보기, ${hlSec(it.dur)}">${it.thumb?`<img src="${it.thumb}" alt="">`:'▶'}</button><small>${hlSec(it.dur)}</small>${n>1?`<button type="button" class="hl-bx" data-bx="${i}" aria-label="${i+1}번째 영상 빼기">${x}</button>`:''}</div>`).join('');
+  $('#hlBatch').hidden=false;
+  $('#hlBatch').querySelectorAll('[data-bi]').forEach(b=>b.onclick=()=>hlBatchShow(+b.dataset.bi));
+  $('#hlBatch').querySelectorAll('[data-bx]').forEach(b=>b.onclick=()=>{const i=+b.dataset.bx,[it]=D.items.splice(i,1);URL.revokeObjectURL(it.url);
+    const cur=D.cur>i?D.cur-1:Math.min(D.cur,D.items.length-1);hlBatchRender();hlBatchShow(cur);($('#hlBatch [data-bx]')||$('#hlBatch [data-bi]'))?.focus()});
+  const s=D.skip,notes=[];const tr=D.items.filter(it=>it.trimmed).length;
+  if(tr)notes.push(`${tr}개는 60초가 넘어 앞 60초만 저장돼요`);
+  const sk=s.type+s.big+s.bad;if(sk)notes.push(`${sk}개는 올릴 수 없어 뺐어요 (${[s.type&&'영상 아님',s.big&&HL_MAX_MB+'MB 초과',s.bad&&'열 수 없는 형식'].filter(Boolean).join('·')})`);
+  if(s.over)notes.push(`한 번에 ${HL_BATCH_MAX}개까지라 ${s.over}개는 뺐어요`);
+  $('#hlSplitText').innerHTML=`영상 <b>${n}개</b>를 모두 <b>${total}조각</b>으로 나눠 저장해요 (${HL_SEG}초씩)`+(notes.length?`<small>${notes.join('<br>')}</small>`:'')}
+async function hlPickMany(files){const {items,skip}=await hlReadBatch(files);
+  if(!items.length){const s=skip;await openDialog({title:'올릴 수 있는 영상이 없어요',message:[s.type&&`영상이 아닌 파일 ${s.type}개`,s.big&&`${HL_MAX_MB}MB가 넘는 영상 ${s.big}개`,s.bad&&`이 브라우저에서 열리지 않는 영상 ${s.bad}개`].filter(Boolean).join('\n'),showCancel:false});return}
+  hlDraft={batch:true,items,skip,cur:0,tech:'',file:items[0].file,url:items[0].url,dur:items[0].dur,segs:items[0].segs,thumb:items[0].thumb};
+  hlOpenAdd();hlBatchRender();hlBatchShow(0)}
+$('#hlFile').onchange=async e=>{const files=[...(e.target.files||[])];e.target.value='';/* 같은 영상을 다시 골라도 반응하게 */
+  if(files.length>1)return hlPickMany(files);
+  const file=files[0];if(!file)return;
   if(!/^video\//.test(file.type)){await openDialog({title:'영상 파일만 올릴 수 있어요',message:'사진이나 다른 파일은 올릴 수 없어요.',showCancel:false});return}
   if(file.size>HL_MAX_MB*1048576){await openDialog({title:'영상이 너무 커요',message:`${HL_MAX_MB}MB 이하 영상만 올릴 수 있어요. 휴대폰에서 화질을 낮추거나 잘라서 다시 올려 주세요.`,showCancel:false});return}
   const url=URL.createObjectURL(file);let v;
@@ -1920,6 +1990,7 @@ $('#hlFile').onchange=async e=>{const file=e.target.files&&e.target.files[0];e.t
   const thumb=await hlThumb(v,d);
   hlDraft={file,url,dur:d,segs:hlSplit(d),thumb,tech:''};hlOpenAdd()};
 function hlOpenAdd(){const D=hlDraft,n=D.segs.length;
+  if(!D.batch){$('#hlAddTitle').textContent='영상 추가';$('#hlBatch').hidden=true;$('#hlBatch').innerHTML=''}
   $('#hlSegs').innerHTML=D.segs.map((s,i)=>`<span class="${i===0?'on':''}" style="flex:${(s[1]-s[0]).toFixed(1)}"></span>`).join('');
   $('#hlSplitText').innerHTML=n>1?`<b>${hlSec(D.dur)}</b> 영상을 <b>${n}개</b>로 나눠 저장해요 (${HL_SEG}초씩)`:`<b>${hlSec(D.dur)}</b> 영상 1개로 저장해요`;
   const seen=new Set(),ids=[];[...recordHistory].reverse().forEach(r=>[r.focusTech,...(r.skills||[])].forEach(id=>{if(id&&!seen.has(id)){seen.add(id);ids.push(id)}}));
@@ -1927,10 +1998,18 @@ function hlOpenAdd(){const D=hlDraft,n=D.segs.length;
   $('#hlChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{D.tech=b.dataset.hlTech;$('#hlChips').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
   const pv=$('#hlPrev');pv.src=D.url;pv.ontimeupdate=()=>{if(pv.currentTime>=D.segs[0][1])pv.currentTime=0};pv.play().catch(()=>{});
   $('#hlAddSave').disabled=false;$('#hlAdd').hidden=false;setTimeout(()=>$('#hlAddClose').focus(),50)}
-function hlCloseAdd(){const pv=$('#hlPrev');pv.pause();pv.removeAttribute('src');pv.load();if(hlDraft)URL.revokeObjectURL(hlDraft.url);hlDraft=null;$('#hlAdd').hidden=true;$('#hlAddBtn')?.focus()}
+function hlCloseAdd(){const pv=$('#hlPrev');pv.pause();pv.removeAttribute('src');pv.load();if(hlDraft){if(hlDraft.batch)hlDraft.items.forEach(it=>URL.revokeObjectURL(it.url));else URL.revokeObjectURL(hlDraft.url)}hlDraft=null;$('#hlBatch').hidden=true;$('#hlBatch').innerHTML='';$('#hlAdd').hidden=true;$('#hlAddBtn')?.focus()}
 $('#hlAddClose').onclick=$('#hlAddCancel').onclick=hlCloseAdd;
 $('#hlAdd').onclick=e=>{if(e.target.id==='hlAdd')hlCloseAdd()};
 $('#hlAddSave').onclick=async()=>{const D=hlDraft;if(!D)return;$('#hlAddSave').disabled=true;
+  if(D.batch){const now=Date.now(),n=D.items.length;let saved=0,pieces=0;
+    if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+    for(let i=0;i<n;i++){const it=D.items[i];/* 고른 순서대로 앞에 보이게 */
+      const clip={id:'v'+(now+i).toString(36)+Math.random().toString(36).slice(2,6),blob:it.file,type:it.file.type,createdAt:now+(n-1-i),dur:it.dur,segs:it.segs,thumb:it.thumb,tech:D.tech,seen:false};
+      try{await hlPut(clip);saved++;pieces+=it.segs.length}catch(err){break}}
+    hlCloseAdd();await hlRender();
+    if(saved<n){await openDialog({title:saved?`${n}개 중 ${saved}개만 저장했어요`:'저장하지 못했어요',message:'이 휴대폰의 브라우저 저장 공간이 부족하거나 저장할 수 없는 상태예요. 예전 영상을 지우고 다시 시도해 주세요.',showCancel:false});return}
+    showToast(`영상 ${n}개를 ${pieces}조각으로 저장했어요`);return}
   const clip={id:'v'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),blob:D.file,type:D.file.type,createdAt:Date.now(),dur:D.dur,segs:D.segs,thumb:D.thumb,tech:D.tech,seen:false};
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});await hlPut(clip)}
   catch(err){$('#hlAddSave').disabled=false;await openDialog({title:'저장 공간이 부족해요',message:'이 휴대폰의 브라우저 저장 공간이 꽉 찼어요. 예전 영상을 지우거나 더 짧은 영상을 올려 주세요.',showCancel:false});return}
@@ -1959,10 +2038,18 @@ function hlClosePlayer(){if(!hlPlay)return;cancelAnimationFrame(hlPlay.raf);cons
   b.onpointerup=up;b.onpointercancel=()=>{clearTimeout(hold);t0=0;$('#hlPlayer').classList.remove('is-paused');$('#hlVideo').play().catch(()=>{})};
   b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();hlStep(dir)}}});
 $('#hlClose').onclick=hlClosePlayer;
+$('#hlPlayer').addEventListener('contextmenu',e=>e.preventDefault());
 $('#hlMute').onclick=()=>{if(!hlPlay)return;hlPlay.muted=!hlPlay.muted;$('#hlVideo').muted=hlPlay.muted;$('#hlPlayer').classList.toggle('is-muted',hlPlay.muted);$('#hlMute').setAttribute('aria-label',hlPlay.muted?'소리 켜기':'소리 끄기')};
-$('#hlDel').onclick=async()=>{if(!hlPlay)return;const c=hlPlay.list[hlPlay.ci];$('#hlVideo').pause();
-  const ok=await openDialog({title:'이 영상을 지울까요?',message:`나눠 저장된 ${c.segs.length}개가 모두 지워져요. 되돌릴 수 없어요.`,okText:'지우기',cancelText:'취소',danger:true});
-  if(!ok){$('#hlVideo').play().catch(()=>{});return}
+/* v88: 나눈 조각 중 하나만 지우기 */
+async function hlRethumb(c){try{const v=await hlMeta(hlUrl(c)),[s,e]=c.segs[0],t=await hlThumb(v,e-s,s);v.removeAttribute('src');v.load();c.thumb=t||''}catch(err){}}
+$('#hlDel').onclick=async()=>{if(!hlPlay)return;const P=hlPlay,c=P.list[P.ci],n=c.segs.length;$('#hlVideo').pause();
+  let ans;
+  if(n>1)ans=await openDialog({title:'이 조각만 지울까요?',message:`${n}개 중 ${P.si+1}번째 조각만 지워요.\n나머지 ${n-1}개는 남아요.`,okText:'지우기',cancelText:'취소',danger:true,extra:{text:`영상 전체 지우기 (${n}개 모두)`,value:'all'}});
+  else ans=await openDialog({title:'이 영상을 지울까요?',message:'지운 영상은 되돌릴 수 없어요.',okText:'지우기',cancelText:'취소',danger:true});
+  if(!ans){$('#hlVideo').play().catch(()=>{});return}
+  if(ans===true&&n>1){const si=P.si,oldThumb=c.thumb,gone=c.segs.splice(si,1)[0];if(si===0)await hlRethumb(c);
+    try{await hlPut(c)}catch(err){c.segs.splice(si,0,gone);c.thumb=oldThumb;$('#hlVideo').play().catch(()=>{});await openDialog({title:'지우지 못했어요',message:'잠시 뒤 다시 시도해 주세요.',showCancel:false});return}
+    if(!hlPlay)return;P.si=Math.min(si,c.segs.length-1);hlLoad();showToast(`조각을 지웠어요 · 남은 조각 ${c.segs.length}개`);return}
   await hlDelete(c.id);if(hlUrls.has(c.id)){URL.revokeObjectURL(hlUrls.get(c.id));hlUrls.delete(c.id)}$('#hlVideo').removeAttribute('src');delete $('#hlVideo').dataset.id;
   hlClosePlayer();showToast('영상을 지웠어요')};
 document.addEventListener('keydown',e=>{if(e.key!=='Escape'||document.querySelector('.jl-dialog'))return;if(hlPlay){e.preventDefault();hlClosePlayer()}else if(!$('#hlAdd').hidden){e.preventDefault();hlCloseAdd()}});
