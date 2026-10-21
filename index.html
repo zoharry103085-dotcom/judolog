@@ -1277,14 +1277,14 @@ html,body,*{touch-action:manipulation}
 </div>
 <details class="interaction-settings">
 <summary id="effectSettingsTitle">인터랙션 설정</summary>
-<p>클릭 반응이 불편하면 효과별로 끌 수 있습니다.</p>
-<label class="effect-toggle"><span>화면 충격 효과</span><input id="impactToggle" type="checkbox" checked><i class="toggle-track" aria-hidden="true"></i></label>
-<label class="effect-toggle"><span>한판 인장 효과</span><input id="stampToggle" type="checkbox" checked><i class="toggle-track" aria-hidden="true"></i></label>
+<p>마우스 커서 모양을 바꿀 수 있습니다.</p>
+
+
 <label class="effect-toggle cursor-toggle"><span>柔 인장 커서<small>끄면 기본 커서를 사용합니다</small></span><input id="cursorToggle" type="checkbox"><i class="toggle-track" aria-hidden="true"></i></label>
 </details>
 </aside>
 </main>
-<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v95 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
+<footer class="site-foot"><div class="site-foot-l"><b>JUDOLOG</b><p>코치 피드백을 기술별로 정리하는 유도 수련 노트</p></div><div class="site-foot-r"><p>기획·디자인 <b>조환서</b> · 2026</p><p>UI 프로토타입 v96 · 기록은 이 브라우저에만 저장됩니다</p></div></footer>
 <div class="mobiletip">상단 탭을 눌러 화면을 바꿔보세요.</div>
 </div>
 <div class="judo-cursor" id="judoCursor" aria-hidden="true">柔</div>
@@ -1457,24 +1457,14 @@ function startHeroTyping(){
   draw();
 }
 function initializeEffects(){
-  const impact=$('#impactToggle'),stamp=$('#stampToggle'),cursorToggle=$('#cursorToggle'),cursor=$('#judoCursor'),wrap=$('.wrap');
-  impact.checked=effectState.impact!==false;stamp.checked=effectState.stamp!==false;
-  impact.onchange=()=>{effectState.impact=impact.checked;saveEffectState()};
-  stamp.onchange=()=>{effectState.stamp=stamp.checked;saveEffectState()};
+  const cursorToggle=$('#cursorToggle'),cursor=$('#judoCursor'),wrap=$('.wrap');
   const applyCursorMode=mode=>{effectState.cursor=mode;wrap.classList.toggle('judo-cursor-on',mode==='seal');cursor.style.display='none';cursorToggle.checked=mode==='seal';saveEffectState()};
   const initialCursor=effectState.cursor==='seal'?'seal':'default';
   cursorToggle.onchange=()=>applyCursorMode(cursorToggle.checked?'seal':'default');
   applyCursorMode(initialCursor);
   document.addEventListener('mousemove',event=>{if(event.pointerType==='touch'||effectState.cursor!=='seal'){cursor.style.display='none';return}cursor.style.display='grid';cursor.style.left=event.clientX+'px';cursor.style.top=event.clientY+'px'});
   document.addEventListener('mouseleave',()=>cursor.style.display='none');
-  document.addEventListener('click',event=>{
-    /* v33-claude: 一本 도장과 화면 흔들림은 '오늘의 수련 저장'이 완료된 순간에만 표시 */if(!event.target.closest('#recordNext')||!$('#saved').classList.contains('show'))return;
-    if(motionPreference.matches)return;
-    const activePhone=$('.phone.active');if(!activePhone)return;
-    if(effectState.impact!==false){activePhone.classList.remove('judo-impact');void activePhone.offsetWidth;activePhone.classList.add('judo-impact');setTimeout(()=>activePhone.classList.remove('judo-impact'),420)}
-    const menuTarget=event.target.closest('.bottom-nav,.record-head,.history-head,.media .back');
-    if(effectState.stamp!==false&&!menuTarget){const rect=activePhone.getBoundingClientRect(),burst=document.createElement('div');burst.className='ippon-burst';burst.textContent='一本';burst.style.left=Math.max(32,Math.min(rect.width-32,event.clientX-rect.left))+'px';burst.style.top=Math.max(70,Math.min(rect.height-80,event.clientY-rect.top))+'px';activePhone.appendChild(burst);setTimeout(()=>burst.remove(),700)}
-  });
+  /* v96: 저장 순간의 화면 흔들림·一本 인장 효과 제거 (깔끔한 저장 완료 화면) */
 }
 
 /* ---- 앱 내부 대화상자 (브라우저 기본 confirm/prompt/alert 대체) ----
